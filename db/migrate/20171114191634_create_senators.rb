@@ -25,6 +25,8 @@ class CreateSenators < ActiveRecord::Migration[5.1]
       t.string :state_rank
       t.float :votes_with_party_pct
       t.string :gender
+      t.string :google_entity_id
+      t.string :wikipedia
       t.integer :state_id
 
       t.timestamps

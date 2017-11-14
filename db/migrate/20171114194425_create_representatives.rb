@@ -25,6 +25,8 @@ class CreateRepresentatives < ActiveRecord::Migration[5.1]
       t.string :votes_with_party_pct
       t.string :gender
       t.boolean :at_large
+      t.string :google_entity_id
+      t.string :wikipedia
       t.integer :district_id
 
       t.timestamps

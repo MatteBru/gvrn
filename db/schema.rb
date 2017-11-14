@@ -10,7 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171114202440) do
+ActiveRecord::Schema.define(version: 20171114202909) do
+
+  create_table "districts", force: :cascade do |t|
+    t.string "name"
+    t.integer "state_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "representatives", force: :cascade do |t|
     t.string "first_name"
@@ -37,6 +44,8 @@ ActiveRecord::Schema.define(version: 20171114202440) do
     t.string "votes_with_party_pct"
     t.string "gender"
     t.boolean "at_large"
+    t.string "google_entity_id"
+    t.string "wikipedia"
     t.integer "district_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -67,6 +76,8 @@ ActiveRecord::Schema.define(version: 20171114202440) do
     t.string "state_rank"
     t.float "votes_with_party_pct"
     t.string "gender"
+    t.string "google_entity_id"
+    t.string "wikipedia"
     t.integer "state_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
