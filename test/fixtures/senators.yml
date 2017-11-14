@@ -1,0 +1,55 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  first_name: MyString
+  middle_name: MyString
+  last_name: MyString
+  image: MyString
+  date_of_birth: MyString
+  biography: MyString
+  party: MyString
+  start_date: MyString
+  leadership_role: MyString
+  twitter_account: MyString
+  facebook_account: MyString
+  youtube_account: MyString
+  url: MyString
+  contact_form: MyString
+  in_office: MyString
+  dw_nominate: MyString
+  next_election: MyString
+  total_votes: MyString
+  missed_votes: MyString
+  office: MyString
+  phone: MyString
+  state_rank: MyString
+  votes_with_party_pct: MyString
+  gender: MyString
+  state_id: 1
+
+two:
+  first_name: MyString
+  middle_name: MyString
+  last_name: MyString
+  image: MyString
+  date_of_birth: MyString
+  biography: MyString
+  party: MyString
+  start_date: MyString
+  leadership_role: MyString
+  twitter_account: MyString
+  facebook_account: MyString
+  youtube_account: MyString
+  url: MyString
+  contact_form: MyString
+  in_office: MyString
+  dw_nominate: MyString
+  next_election: MyString
+  total_votes: MyString
+  missed_votes: MyString
+  office: MyString
+  phone: MyString
+  state_rank: MyString
+  votes_with_party_pct: MyString
+  gender: MyString
+  state_id: 1
