@@ -18,200 +18,234 @@ def create_states
 end
 
 def find_wikipedia_page(google_entity_id)
-  result_hash = HTTParty.get("https://kgsearch.googleapis.com/v1/entities:search?ids=#{google_entity_id}&key=AIzaSyAbq12TpjfMtq1d4nn95MbeutoEF6Hso5Y")
-  result_hash["itemListElement"]["result"]["detailedDescription"]["url"]
+  google_entity_id == "/m/03whyr" ? g_id = "/m/04m7rg" : g_id = google_entity_id    
+  result_hash = HTTParty.get("https://kgsearch.googleapis.com/v1/entities:search?ids=#{g_id}&key=AIzaSyAbq12TpjfMtq1d4nn95MbeutoEF6Hso5Y").parsed_response
+  begin
+    url = result_hash["itemListElement"][0]["result"]["detailedDescription"]["url"]
+  rescue
+    begin
+      url = result_hash["itemListElement"][0]["result"]["image"]["url"]
+    rescue
+      byebug
+      url = ""
+    end
+  end
+  if !url.match(/https:\/\/en.wikipedia.org\//)
+    begin
+      name = result_hash["itemListElement"][0]["result"]["name"]
+      slugified_name = name.gsub(" ", "_")
+      url = "https://en.wikipedia.org/wiki/#{slugified_name}"
+      begin
+        target = find_target_from_wikipedia_page(url)
+        get_bio(target)
+      rescue
+        url = "https://en.wikipedia.org/wiki/#{slugified_name}_(American_politician)"
+        byebug
+      end
+    rescue
+      byebug
+    end
+  end
+  url
 end
 
-def get_start_date(first_name, last_name)
-  result_hash = HTTParty.get(
-    "https://en.wikipedia.org/w/api.php?action=query&titles=#{first_name}%20#{last_name}&prop=revisions&rvprop=parsetree&format=json&redirects",
-    :headers => WIKIMEDIA_HEADERS
-  ).parsed_response
-  random_string = result_hash["query"]["pages"].keys[0]
-  xml_data = result_hash["query"]["pages"][random_string]["revisions"][0]["parsetree"]
-  xml_doc  = Nokogiri::XML(xml_data)
-  term_start = xml_doc.at('name:contains("term_start")')
-
-  # if at a disambiguation page, go to the politician's page
-  # if !term_start
-  #   result_hash = HTTParty.get(
-  #     "https://en.wikipedia.org/w/api.php?action=query&titles=#{first_name}%20#{last_name}%20(politician)&prop=revisions&rvprop=parsetree&format=json&redirects",
-  #     :headers => WIKIMEDIA_HEADERS
-  #   ).parsed_response
-  #   random_string = result_hash["query"]["pages"].keys[0]
-# 
-    # if this still doesn't work, try adding "Jr."
-    # if !random_string["revisions"]
-    #   result_hash = HTTParty.get(
-    #     "https://en.wikipedia.org/w/api.php?action=query&titles=#{first_name}%20#{last_name}%20Jr.&prop=revisions&rvprop=parsetree&format=json&redirects",
-    #     :headers => WIKIMEDIA_HEADERS
-    #   ).parsed_response
-    #   random_string = result_hash["query"]["pages"].keys[0]
-    #   xml_data = result_hash["query"]["pages"][random_string]["revisions"][0]["parsetree"]
-    #   xml_doc  = Nokogiri::XML(xml_data)
-    #   term_start = xml_doc.at('name:contains("term_start")')
-    # else
-    #   xml_data = result_hash["query"]["pages"][random_string]["revisions"][0]["parsetree"]
-    #   xml_doc  = Nokogiri::XML(xml_data)
-    #   term_start = xml_doc.at('name:contains("term_start")') 
-    # end
-
-  # end
-
-  start_date = term_start.parent.children[2].children.text.strip
+def find_target_from_wikipedia_page(url)
+  matches = url.match(/https:\/\/en.wikipedia.org\/wiki\/(.+)/)
+  begin
+    target = matches.captures[0].gsub("_", "%20")
+  rescue
+    byebug
+  end
 end
 
-def get_bio(first_name, last_name)
+def get_start_date(target)
   result_hash = HTTParty.get(
-    "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles=#{first_name}%20#{last_name}&redirects",
+    "https://en.wikipedia.org/w/api.php?action=query&titles=#{target}&prop=revisions&rvprop=parsetree&format=json&redirects",
     :headers => WIKIMEDIA_HEADERS
   ).parsed_response
-  random_string = result_hash["query"]["pages"].keys[0]
-  bio = result_hash["query"]["pages"][random_string]["extract"]
-
-  # if at a disambiguation page, go to the politician's page
-  # if bio.start_with?("#{first_name} #{last_name} may refer to:")
-  #   result_hash = HTTParty.get(
-  #     "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles=#{first_name}%20#{last_name}%20(politician)&redirects",
-  #     :headers => WIKIMEDIA_HEADERS
-  #   ).parsed_response
-  #   random_string = result_hash["query"]["pages"].keys[0]
-  #   bio = result_hash["query"]["pages"][random_string]["extract"]
-
-    # if this still doesn't work, try adding "Jr."
-  #   if !bio
-  #     result_hash = HTTParty.get(
-  #       "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles=#{first_name}%20#{last_name}%20Jr.&redirects",
-  #       :headers => WIKIMEDIA_HEADERS
-  #     ).parsed_response
-  #     random_string = result_hash["query"]["pages"].keys[0]
-  #     bio = result_hash["query"]["pages"][random_string]["extract"]
-  #   end
-  # end
-
-  bio.gsub(/\(.*\) /, "")
+  begin
+    random_string = result_hash["query"]["pages"].keys[0]
+    xml_data = result_hash["query"]["pages"][random_string]["revisions"][0]["parsetree"]
+    xml_doc  = Nokogiri::XML(xml_data)
+    term_start = xml_doc.at('name:contains("term_start")')
+    start_date = term_start.parent.children[2].children.text.strip
+    Date.parse(start_date)
+  rescue
+    byebug
+    nil
+  end
 end
 
-def get_image(first_name, last_name)
+def get_bio(target)
   result_hash = HTTParty.get(
-    "https://en.wikipedia.org/w/api.php?action=query&titles=#{first_name}%20#{last_name}&prop=pageimages&format=json&redirects", 
+    "https://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=&explaintext=&titles=#{target}&redirects",
     :headers => WIKIMEDIA_HEADERS
   ).parsed_response
-  random_string = result_hash["query"]["pages"].keys[0]
-  image_string = result_hash["query"]["pages"][random_string]["pageimage"]
+  begin
+    random_string = result_hash["query"]["pages"].keys[0]
+    bio = result_hash["query"]["pages"][random_string]["extract"]
+    bio.gsub(bio.match(/ (\([^\)]*\))/)[0], "")
+  rescue
+    byebug
+  end
+end
 
-  # if at a disambiguation page, go to the politician's page
-  # if !image_string
-  #   result_hash = HTTParty.get(
-  #     "https://en.wikipedia.org/w/api.php?action=query&titles=#{first_name}%20#{last_name}%20(politician)&prop=pageimages&format=json&redirects", 
-  #     :headers => WIKIMEDIA_HEADERS
-  #   ).parsed_response
-  #   random_string = result_hash["query"]["pages"].keys[0]
-  #   image_string = result_hash["query"]["pages"][random_string]["pageimage"]
-    
-    # if this still doesn't work, try adding "Jr."
-    # if !image_string
-    #   result_hash = HTTParty.get(
-    #     "https://en.wikipedia.org/w/api.php?action=query&titles=#{first_name}%20#{last_name}%20Jr.&prop=pageimages&format=json&redirects", 
-    #     :headers => WIKIMEDIA_HEADERS
-    #   ).parsed_response
-    #   random_string = result_hash["query"]["pages"].keys[0]
-    #   image_string = result_hash["query"]["pages"][random_string]["pageimage"]
-    #   byebug
-    # end
-  # end
-
-  slugged_image_url = image_string.gsub("_", "%20").prepend("File:")
-  get_image_from_slug(slugged_image_url)
+def get_image(target)
+  result_hash = HTTParty.get(
+    "https://en.wikipedia.org/w/api.php?action=query&titles=#{target}&prop=pageimages&format=json&redirects", 
+    :headers => WIKIMEDIA_HEADERS
+  ).parsed_response
+  begin
+    random_string = result_hash["query"]["pages"].keys[0]
+    image_string = result_hash["query"]["pages"][random_string]["pageimage"]
+    slugged_image_url = image_string.gsub("_", "%20").prepend("File:")
+    get_image_from_slug(slugged_image_url)
+  rescue
+    byebug
+    nil
+  end
 end
 
 def get_image_from_slug(slugged_image_url)
-  result_hash = HTTParty.get(
-    "https://en.wikipedia.org/w/api.php?action=query&titles=#{slugged_image_url}&prop=imageinfo&iiprop=url&format=json", 
-    :headers => WIKIMEDIA_HEADERS
-    ).parsed_response
-  image_url = result_hash["query"]["pages"]["-1"]["imageinfo"][0]["url"]
+  if !slugged_image_url.ascii_only?
+    url = Addressable::URI.parse("https://en.wikipedia.org/w/api.php?action=query&titles=#{slugged_image_url}&prop=imageinfo&iiprop=url&format=json").normalize.to_str
+  else
+    url = "https://en.wikipedia.org/w/api.php?action=query&titles=#{slugged_image_url}&prop=imageinfo&iiprop=url&format=json"
+  end
+  begin
+    result_hash = HTTParty.get(url, :headers => WIKIMEDIA_HEADERS).parsed_response
+    image_url = result_hash["query"]["pages"]["-1"]["imageinfo"][0]["url"]
+  rescue
+  end
 end
 
 def create_senator(senator_hash)
-
-  senator = Senator.create(
-    first_name: senator_hash["first_name"],
-    middle_name: senator_hash["middle_name"],
-    last_name: senator_hash["last_name"],
-    image: get_image(senator_hash["first_name"], senator_hash["last_name"]),
-    date_of_birth: Date.parse(senator_hash["date_of_birth"]),
-    biography: get_bio(senator_hash["first_name"], senator_hash["last_name"]),
-    party: senator_hash["party"],
-    start_date: Date.parse(get_start_date(senator_hash["first_name"], senator_hash["last_name"])),
-    leadership_role: senator_hash["leadership_role"],
-    twitter_account: senator_hash["twitter_account"],
-    facebook_account: senator_hash["facebook_account"],
-    youtube_account: senator_hash["youtube_account"],
-    url: senator_hash["url"],
-    contact_form: senator_hash["contact_form"],
-    in_office: senator_hash["in_office"],
-    dw_nominate: senator_hash["dw_nominate"],
-    next_election: senator_hash["next_election"],
-    total_votes: senator_hash["total_votes"],
-    missed_votes: senator_hash["missed_votes"],
-    office: senator_hash["office"],
-    phone: senator_hash["phone"],
-    state: State.find_by(abbreviation: senator_hash["state"]),
-    state_rank: senator_hash["state_rank"],
-    votes_with_party_pct: senator_hash["votes_with_party_pct"],
-    gender: HTTParty.get(senator_hash["api_uri"], :headers => PROPUBLICA_HEADERS)["results"][0]["gender"],
-    google_entity_id: senator_hash["google_entity_id"]
-  )
-  puts "CREATED_SENATOR #{senator.full_name}, STATE #{senator.state.abbreviation}"
+  if senator_hash["in_office"] == true
+    senator = Representative.find_by(
+      first_name: senator_hash["first_name"],
+      last_name: senator_hash["last_name"],
+      date_of_birth: Date.parse(senator_hash["date_of_birth"])
+    )
+    if !senator
+      wikipedia_page = find_wikipedia_page(senator_hash["google_entity_id"])
+      target = find_target_from_wikipedia_page(wikipedia_page)
+      senator = Senator.create(
+        first_name: senator_hash["first_name"],
+        middle_name: senator_hash["middle_name"],
+        last_name: senator_hash["last_name"],
+        image: get_image(target),
+        date_of_birth: Date.parse(senator_hash["date_of_birth"]),
+        biography: get_bio(target),
+        party: senator_hash["party"],
+        start_date: get_start_date(target),
+        leadership_role: senator_hash["leadership_role"],
+        twitter_account: senator_hash["twitter_account"],
+        facebook_account: senator_hash["facebook_account"],
+        youtube_account: senator_hash["youtube_account"],
+        url: senator_hash["url"],
+        contact_form: senator_hash["contact_form"],
+        in_office: senator_hash["in_office"],
+        dw_nominate: senator_hash["dw_nominate"],
+        next_election: senator_hash["next_election"],
+        total_votes: senator_hash["total_votes"],
+        missed_votes: senator_hash["missed_votes"],
+        office: senator_hash["office"],
+        phone: senator_hash["phone"],
+        state: State.find_by(abbreviation: senator_hash["state"]),
+        state_rank: senator_hash["state_rank"],
+        votes_with_party_pct: senator_hash["votes_with_party_pct"],
+        gender: HTTParty.get(senator_hash["api_uri"], :headers => PROPUBLICA_HEADERS)["results"][0]["gender"],
+        google_entity_id: senator_hash["google_entity_id"],
+        wikipedia: wikipedia_page
+      )
+      puts "CREATED_SENATOR #{senator.full_name}, STATE #{senator.state.abbreviation}"
+    else
+      puts "Senator #{senator.full_name} has already been created."
+    end
+  else
+    puts "Senator #{senator_hash["first_name"]} #{senator_hash["last_name"]} is no longer in office."
+  end
 end
 
 def create_district(representative_hash)
   rep_state = State.find_by(abbreviation: representative_hash["state"])
-  rep_district = District.find_by(
-    state_id: rep_state.id, 
-    name: representative_hash["district"]
-  )
-  if !rep_district
-    rep_district = District.create(
+  if rep_state
+    rep_district = District.find_by(
       state_id: rep_state.id, 
       name: representative_hash["district"]
     )
-    rep_state.districts << rep_district
+    if !rep_district
+      rep_district = District.create(
+        state_id: rep_state.id, 
+        name: representative_hash["district"]
+      )
+      rep_state.districts << rep_district
+    end
+    rep_district
+  else
+    byebug
   end
-  rep_district
 end
 
 def create_representative(representative_hash)
-  rep_district = create_district(representative_hash)
-  representative = Representative.create(
-    first_name: representative_hash["first_name"],
-    middle_name: representative_hash["middle_name"],
-    last_name: representative_hash["last_name"],
-    image: get_image(representative_hash["first_name"], representative_hash["last_name"]),
-    date_of_birth: Date.parse(representative_hash["date_of_birth"]),
-    biography: get_bio(representative_hash["first_name"], representative_hash["last_name"]),
-    party: representative_hash["party"],
-    start_date: Date.parse(get_start_date(representative_hash["first_name"], representative_hash["last_name"])),
-    leadership_role: representative_hash["leadership_role"],
-    twitter_account: representative_hash["twitter_account"],
-    facebook_account: representative_hash["facebook_account"],
-    youtube_account: representative_hash["youtube_account"],
-    url: representative_hash["url"],
-    contact_form: representative_hash["contact_form"],
-    in_office: representative_hash["in_office"],
-    dw_nominate: representative_hash["dw_nominate"],
-    next_election: representative_hash["next_election"],
-    total_votes: representative_hash["total_votes"],
-    missed_votes: representative_hash["missed_votes"],
-    office: representative_hash["office"],
-    phone: representative_hash["phone"],
-    at_large: representative_hash["at_large"],
-    district_id: rep_district.id,
-    votes_with_party_pct: representative_hash["votes_with_party_pct"],
-    gender: HTTParty.get(representative_hash["api_uri"], :headers => PROPUBLICA_HEADERS)["results"][0]["gender"]
-  )
-  puts "CREATED_REP #{representative.full_name}, DISTRICT #{representative.district.name}, STATE #{representative.state.abbreviation}"
+  if representative_hash["title"] == "Representative"
+    if representative_hash["in_office"] == true
+      representative = Representative.find_by(
+        first_name: representative_hash["first_name"],
+        last_name: representative_hash["last_name"],
+        date_of_birth: Date.parse(representative_hash["date_of_birth"])
+      )
+      if !representative
+        rep_district = create_district(representative_hash)
+        if representative_hash["google_entity_id"]
+          wikipedia_page = find_wikipedia_page(representative_hash["google_entity_id"])
+        else
+          if representative_hash["first_name"] == "John" && representative_hash["last_name"] == "Curtis"
+            wikipedia_page = "https://en.wikipedia.org/wiki/John_Curtis_(American_politician)"
+          else
+            wikipedia_page = "https://en.wikipedia.org/wiki/#{representative_hash["first_name"]}_#{representative_hash["last_name"]}"
+          end
+        end
+        target = find_target_from_wikipedia_page(wikipedia_page)   
+        representative = Representative.create(
+          first_name: representative_hash["first_name"],
+          middle_name: representative_hash["middle_name"],
+          last_name: representative_hash["last_name"],
+          image: get_image(target),
+          date_of_birth: Date.parse(representative_hash["date_of_birth"]),
+          biography: get_bio(target),
+          party: representative_hash["party"],
+          start_date: get_start_date(target),
+          leadership_role: representative_hash["leadership_role"],
+          twitter_account: representative_hash["twitter_account"],
+          facebook_account: representative_hash["facebook_account"],
+          youtube_account: representative_hash["youtube_account"],
+          url: representative_hash["url"],
+          contact_form: representative_hash["contact_form"],
+          in_office: representative_hash["in_office"],
+          dw_nominate: representative_hash["dw_nominate"],
+          next_election: representative_hash["next_election"],
+          total_votes: representative_hash["total_votes"],
+          missed_votes: representative_hash["missed_votes"],
+          office: representative_hash["office"],
+          phone: representative_hash["phone"],
+          at_large: representative_hash["at_large"],
+          district_id: rep_district.id,
+          votes_with_party_pct: representative_hash["votes_with_party_pct"],
+          gender: HTTParty.get(representative_hash["api_uri"], :headers => PROPUBLICA_HEADERS)["results"][0]["gender"],
+          google_entity_id: representative_hash["google_entity_id"],
+          wikipedia: wikipedia_page
+        )
+        puts "CREATED_REP #{representative.full_name}, DISTRICT #{representative.district.name}, STATE #{representative.state.abbreviation}"
+      else
+        puts "#{representative.full_name} has already been created"
+      end
+    else
+      puts "Representative #{representative_hash["first_name"]} #{representative_hash["last_name"]} is no longer in office."
+    end
+  else
+    puts "#{representative_hash["first_name"]} #{representative_hash["last_name"]} does not represent one of the 50 states and will not be counted."
+  end
 end
 
 def lookup_senators
