@@ -4,6 +4,9 @@ require "optparse"
 class User < ApplicationRecord
   has_many :appointments
   belongs_to :district
+  has_one :representative, through: :district
+  has_one :state, through: :district
+  has_many :senators, through: :state
   has_secure_password
   before_validation :dist_search
 

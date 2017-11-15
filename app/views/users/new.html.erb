@@ -1,0 +1,58 @@
+<div class="ui two column centered grid">
+  <div class="column">
+    <div class="ui raised segment">
+      <div class="ui huge header">Sign Up</div>
+      <div class="ui divider"></div>
+      <%= form_with model: @user, :class => 'ui form' do |f| %>
+        <div class="field">
+          <label>Name</label>
+          <%= f.text_field :name, class: "ui input", :placeholder => "Name" %>
+        </div>
+        <div class="two fields">
+          <div class="field">
+            <label>Email</label>
+            <%= f.email_field :email, class: "ui input", :placeholder => "Email" %>
+          </div> 
+          <div class="field">
+            <label>Phone Number</label>
+            <%= f.phone_field :phone, class: "ui input", :placeholder => "Phone" %>
+          </div> 
+        </div>
+        <div class="field">
+          <label>Address</label>
+          <%= f.text_field :address, class: "ui input", :placeholder => "Address" %>
+        </div>
+        <div class="fields">
+          <div class="eight wide field">
+            <label>City</label>
+            <%= f.text_field :city, class: "ui input", :placeholder => "City" %>
+          </div> 
+          <div class="four wide field">
+            <label>State</label>
+            <div class="ui selection fluid dropdown", id="select">
+              <%= f.hidden_field :address_state %>
+              <i class="dropdown icon"></i>
+              <div class="default text">State</div>
+              <div class="menu">
+                <% State.all.each do |state| %>
+                  <div class="item" data-value=<%= state.abbreviation %>><%= state.abbreviation %></div>
+                <% end %>
+              </div>
+            </div>
+          </div> 
+          <div class="four wide field">
+            <label>Zip</label>
+            <%= f.text_field :zip_code, class: "ui input", :placeholder => "Zip" %>
+          </div> 
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <%= f.password_field :password, class: "ui input", :placeholder => "Password" %> 
+        </div>
+        <div class="field">
+          <%= f.submit "Submit", class: "ui green button" %>
+        </div>
+      <% end %>
+    </divs>
+  </div>
+</div>

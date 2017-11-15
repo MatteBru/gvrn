@@ -1,16 +1,15 @@
 <div class="ui fixed inverted menu">
   <div class="ui container">
-    <a href="#" class="header item">
+    <a href="/" class="header item">
       <%= image_tag "logo.png", class: "logo" %>
       gvrn
     </a>
-    <a href="#" class="item">Home</a>
+    <%= link_to "Home", root_path, class: "item" %>
     <div class="ui simple dropdown item">
-      Dropdown <i class="dropdown icon"></i>
+      Senate <i class="dropdown icon"></i>
       <div class="menu">
-        <a class="item" href="#">Link Item</a>
-        <a class="item" href="#">Link Item</a>
-        <div class="divider"></div>
+        <%= link_to "All Senators", senators_path, class: "item" %>
+        <!-- <div class="divider"></div>
         <div class="header">Header Item</div>
         <div class="item">
           <i class="dropdown icon"></i>
@@ -20,8 +19,38 @@
             <a class="item" href="#">Link Item</a>
           </div>
         </div>
-        <a class="item" href="#">Link Item</a>
+        <a class="item" href="#">Link Item</a> -->
       </div>
+    </div>
+    <div class="ui simple dropdown item">
+      House <i class="dropdown icon"></i>
+      <div class="menu">
+        <%= link_to "All Representatives", senators_path, class: "item" %>
+        <!-- <div class="divider"></div>
+        <div class="header">Header Item</div>
+        <div class="item">
+          <i class="dropdown icon"></i>
+          Sub Menu
+          <div class="menu">
+            <a class="item" href="#">Link Item</a>
+            <a class="item" href="#">Link Item</a>
+          </div>
+        </div>
+        <a class="item" href="#">Link Item</a> -->
+      </div>
+    </div>
+    <div class="right menu">
+      <% if logged_in? %>
+        <%= link_to "My Profile", user_path(session[:user_id]), class: "item" %>
+        <div class="item">
+          <%= link_to "Log Out", session_path(session), method: :delete, class: "ui button" %>
+        </div>
+      <% else %>
+        <%= link_to "Log In", login_path, class: "item" %>
+        <div class="item">
+          <%= link_to "Sign Up", signup_path, class: "ui primary button" %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>
