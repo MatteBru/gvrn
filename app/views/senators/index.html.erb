@@ -1,0 +1,11 @@
+<h1>Senators</h1>
+<% @states.each do |state| %>
+  <p><%= state.name%></p>
+  <ul>
+  <% state.senators.each do |senator| %>
+    <% if senator.in_office %>
+      <li><%= link_to senator.full_name, senator_path(senator) %></li>
+    <% end %>
+  <% end %>
+  </ul>
+<% end %>
