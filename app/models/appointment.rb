@@ -1,6 +1,6 @@
 class Appointment < ApplicationRecord
   belongs_to :user, dependent: :destroy
-  belongs_to :rep, dependent: :destroy
+  belongs_to :congressperson, polymorphic: true, dependent: :destroy
 
   include Twilier
   after_create :make_call, :remind, :confirm

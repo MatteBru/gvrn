@@ -8,9 +8,13 @@ class User < ApplicationRecord
   CIV_HOST = 'https://www.googleapis.com/civicinfo/v2/representatives'
   GCODE_TOKEN = "AIzaSyAbq12TpjfMtq1d4nn95MbeutoEF6Hso5Y"
 
-  def dist_search(addr)
+  def addr_string
+    "#{self.address} #{self.city} #{self.state} #{self.zip_code}"
+  end
+
+  def dist_search
     params = {
-      address: addr,
+      address: self.addr_string,
       includeOffices: false,
       levels: "country"
     }
