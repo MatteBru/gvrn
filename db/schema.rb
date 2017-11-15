@@ -10,7 +10,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171114202909) do
+ActiveRecord::Schema.define(version: 20171114205234) do
+
+  create_table "appointments", force: :cascade do |t|
+    t.integer "rep_id"
+    t.integer "user_id"
+    t.datetime "time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "delayed_jobs", force: :cascade do |t|
+    t.integer "priority", default: 0, null: false
+    t.integer "attempts", default: 0, null: false
+    t.text "handler", null: false
+    t.text "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string "locked_by"
+    t.string "queue"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+  end
 
   create_table "districts", force: :cascade do |t|
     t.string "name"
@@ -86,6 +109,20 @@ ActiveRecord::Schema.define(version: 20171114202909) do
   create_table "states", force: :cascade do |t|
     t.string "name"
     t.string "abbreviation"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "name"
+    t.string "phone"
+    t.string "email"
+    t.string "address"
+    t.string "city"
+    t.string "state"
+    t.string "zip_code"
+    t.string "password_digest"
+    t.integer "district_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
