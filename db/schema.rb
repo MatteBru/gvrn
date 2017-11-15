@@ -13,11 +13,13 @@
 ActiveRecord::Schema.define(version: 20171114205234) do
 
   create_table "appointments", force: :cascade do |t|
-    t.integer "rep_id"
+    t.string "congressperson_type"
+    t.integer "congressperson_id"
     t.integer "user_id"
     t.datetime "time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["congressperson_type", "congressperson_id"], name: "index_appointments_on_congressperson"
   end
 
   create_table "delayed_jobs", force: :cascade do |t|
@@ -119,7 +121,7 @@ ActiveRecord::Schema.define(version: 20171114205234) do
     t.string "email"
     t.string "address"
     t.string "city"
-    t.string "state"
+    t.string "address_state"
     t.string "zip_code"
     t.string "password_digest"
     t.integer "district_id"
