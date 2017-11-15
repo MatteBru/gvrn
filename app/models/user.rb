@@ -4,8 +4,10 @@ require "optparse"
 class User < ApplicationRecord
   has_many :appointments
   belongs_to :district
+  has_one :representative, through: :district
+  has_one :state, through: :district
+  has_many :senators, through: :state
   has_secure_password
-  before_create :dist_search
 
   CIV_HOST = 'https://www.googleapis.com/civicinfo/v2/representatives'
   GCODE_TOKEN = "AIzaSyAbq12TpjfMtq1d4nn95MbeutoEF6Hso5Y"
@@ -15,14 +17,11 @@ class User < ApplicationRecord
   end
 
   def dist_search
-    # byebug
     params = {
       address: self.addr_string,
       includeOffices: false,
       levels: "country"
     }
-
-    byebug
 
     url = "#{CIV_HOST}?key=#{GCODE_TOKEN}"
 

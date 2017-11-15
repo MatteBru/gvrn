@@ -13,6 +13,7 @@ class UsersController < ApplicationController
   
   def create
     @user = User.new(user_params)
+    @user.dist_search
     if @user.save
       session[:user_id] = @user.id
       redirect_to user_path(@user)
@@ -42,7 +43,7 @@ class UsersController < ApplicationController
   end
   
   def user_params
-    params.require(:user).permit(:name, :phone, :email, :address, :city, :state, :zip_code, :password)
+    params.require(:user).permit(:name, :phone, :email, :address, :city, :address_state, :zip_code, :password)
   end
 
 end

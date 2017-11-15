@@ -1,1 +1,10 @@
 <h1>Hello, <%= @user.name %></h1>
+
+<p>You live in <%= @user.state.name %>'s <%= @user.district.name %> district.</p>
+
+<p>Your rep:<p>
+<%= link_to @user.representative.full_name, representative_path(@user.representative) %>
+<p>Your senators:</p>
+<% @user.senators.each do |senator| %>
+<%= link_to senator.full_name, senator_path(senator) %>
+<% end %>

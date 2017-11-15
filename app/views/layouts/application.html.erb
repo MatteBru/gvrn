@@ -12,7 +12,10 @@
   <body>
     <%= render "layouts/header" %>
     
-    <div class="ui main container" style="margin-top: 7em;">
+    <% if content_for?(:jumbotron) %>
+      <%= yield(:jumbotron) %>
+    <% end %>
+    <div class="ui main container" style="padding-top: 7em;">
       <%= yield %>
     </div>
     <script   src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
