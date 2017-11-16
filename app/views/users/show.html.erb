@@ -72,3 +72,14 @@
 <% else %>
   <p>Blah blah blah appointments</p>
 <% end %>
+
+<style>.embed-container {position: relative; padding-bottom: 80%; height: 0; max-width: 100%;} .embed-container iframe, .embed-container object, .embed-container iframe{position: absolute; top: 0; left: 0; width: 100%; height: 100%;} small{position: absolute; z-index: 40; bottom: 0; margin-bottom: -15px;}</style><div class="embed-container"><iframe width="500" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" title="districts 2k17" src="//matteo-bruni.maps.arcgis.com/apps/Embed/index.html?webmap=a8c6586acb5f44738ebbf9e86b477084&amp;&feature=USA_115th_Congressional_Districts_2717;DISTRICTID;<%= @user.map_id%>&amp;zoom=true&amp;previewImage=false&amp;scale=true&amp;disable_scroll=true&amp;theme=light"></iframe></div>
+
+<p>You live in <%= @user.state.name %>'s <%= @user.district.name %> district.</p>
+
+<p>Your rep:<p>
+<%= link_to @user.representative.full_name, representative_path(@user.representative) %>
+<p>Your senators:</p>
+<% @user.senators.each do |senator| %>
+<%= link_to senator.full_name, senator_path(senator) %>
+<% end %>
