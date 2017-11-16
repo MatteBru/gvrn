@@ -41,7 +41,10 @@
     </div>
     <div class="right menu">
       <% if logged_in? %>
-        <%= link_to "My Profile", user_path(session[:user_id]), class: "item" %>
+        <a class="item", href=<%= user_path(session[:user_id])%>>
+          <i class="user icon"></i>
+          <%= get_user_name %>
+        </a>
         <div class="item">
           <%= link_to "Log Out", session_path(session), method: :delete, class: "ui button" %>
         </div>

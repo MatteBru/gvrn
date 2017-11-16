@@ -1,23 +1,141 @@
-<h1><%= @senator.full_name %></h1>
-<img class="ui medium image" src=<%= @senator.image %>>
-<ul>
-  <li>Date of Birth: <%= @senator.date_of_birth %></li>
-  <li>Biography: <%= @senator.biography %></li>
-  <li>Party: <%= @senator.party %></li>
-  <li>Start Date: <%= @senator.start_date %></li>
-  <li>Leadership Role: <%= @senator.leadership_role %></li>
-  <li>Twitter Account: <%= @senator.twitter_account %></li>
-  <li>Facebook Account: <%= @senator.facebook_account %></li>
-  <li>Youtube Account: <%= @senator.youtube_account %></li>
-  <li>Url: <%= @senator.url %></li>
-  <li><%= @senator.contact_form %></li>
-  <li><%= @senator.dw_nominate %></li>
-  <li><%= @senator.next_election %></li>
-  <li><%= @senator.total_votes %></li>
-  <li><%= @senator.missed_votes %></li>
-  <li><%= @senator.office %></li>
-  <li><%= @senator.phone %></li>
-  <li><%= @senator.state_rank %></li>
-  <li><%= @senator.votes_with_party_pct %></li>
-  <li><%= @senator.wikipedia %></li>
-</ul>
+<div class="ui grid">
+  <div class="five wide column">
+    <div class="ui fluid card" style="box-shadow: none; margin-top: -20px;">
+      <div class="content">
+        <h1 style="font-size: 2rem; color: black;"><%= @senator.full_name %></h1>
+        <h3 style="margin-top: -10px; color: grey;"><%= @senator.state_rank.capitalize %> Senator from <%= @senator.state.name %></h3>
+        <% if @senator.leadership_role %>
+          <h3 style="margin-top: -10px; color: grey;"><%= @senator.leadership_role %></h3>
+        <% end %>
+      </div>
+      <div class="image">
+        <img class="ui medium image" src=<%= @senator.image %>>
+      </div>
+      <% if logged_in? %>
+        <div class="ui green bottom attached button">
+          <i class="call icon"></i>
+          Schedule Call
+        </div>
+      <% else %>
+        <%= link_to "Log In to Schedule Call", login_path, class: "ui bottom attached button"%>
+      <% end %>
+    </div>
+  </div>
+  <div class="eleven wide column">
+    <div class="row">
+      <div class="social" style="text-align: right;">
+        <a class="ui facebook button" href="https://www.facebook.com/<%= @senator.facebook_account %>">
+          <i class="facebook icon"></i>
+          Facebook
+        </a>
+        <a class="ui twitter button" href="https://www.twitter.com/<%= @senator.twitter_account %>">
+          <i class="twitter icon"></i>
+          Twitter
+        </a>
+        <a class="ui youtube button" href="https://www.youtube.com/<%= @senator.youtube_account %>">
+          <i class="youtube icon"></i>
+          YouTube
+        </a>
+        <a class="ui black button" href=<%= @senator.url %>>
+          <i class="address book outline icon"></i>
+          Website
+        </a>
+        <a class="ui yellow button" href=<%= @senator.wikipedia %>>
+          <i class="wikipedia icon"></i>
+          Wiki
+        </a>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 10%">
+      <div class="ui small four statistics">
+        <div class="statistic">
+          <div class="value">
+            <%= @senator.party %>
+          </div>
+          <div class="label">
+            Party
+          </div>
+        </div>
+        <div class="statistic">
+          <div class="value">
+            <%= @senator.calculate_age %>
+          </div>
+          <div class="label">
+            Age
+          </div>
+        </div>
+        <div class="statistic">
+          <div class="value">
+            <%= @senator.get_start_year %>
+          </div>
+          <div class="label">
+            In Power Since
+          </div>
+        </div>
+        <div class="statistic">
+          <div class="value">
+            <%= @senator.next_election %>
+          </div>
+          <div class="label">
+            Next Election
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 10%;">
+      <div class="ui small four statistics">
+        <% case parse_dw_score %>
+        <% when "liberal"%>
+        <div class="statistic" style="margin-top: 14px">
+            <div class="value" style="font-size: 2rem !important;">
+              <%= @senator.interpret_dw_nominate_score %>
+            </div>
+            <div class="label">
+              Partisan Lean
+            </div>
+          <% end %>
+        </div>
+        <div class="statistic">
+          <div class="value">
+            <%= @senator.total_votes %>
+          </div>
+          <div class="label">
+            Total Votes
+          </div>
+        </div>
+        <div class="statistic">
+          <div class="value">
+            <%= @senator.missed_votes %>
+          </div>
+          <div class="label">
+            Missed Votes
+          </div>
+        </div>
+        <div class="statistic">
+          <div class="value">
+            <%= @senator.votes_with_party_pct.to_f.round %>%
+          </div>
+          <div class="label">
+            Votes With Party
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ui vertical icon menu">
+      <a class="item">
+        <i class="marker icon"></i>
+        Office
+      </a>
+      <a class="item">
+        <i class="call icon"></i>
+        Phone
+      </a>
+      <a class="item" href=<%= @senator.contact_form %>>
+        <i class="comment outline icon"></i>
+        Contact
+      </a>
+    </div>
+  </div>
+</div>
+
+<p style="margin: 50px 20px; font-size: 1.3rem; line-height: 2rem;"><%= raw @senator.biography %></p>

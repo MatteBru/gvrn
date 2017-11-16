@@ -1,10 +1,74 @@
-<h1>Hello, <%= @user.name %></h1>
+<div class="ui grid">
+  <div class="eight wide column">
+    <h1>Hello, <%= @user.first_name %></h1>
+    <h3>Your info:</h3>
+    <div class="ui list">
+      <div class="item">
+        <div class="header"><%= @user.state.name %>'s <%= @user.district.name.to_i.ordinalize %> district
+        </div>
+      </div>
+      <div class="item"><%= @user.address %></div>
+      <div class="item"><%= @user.city %>, <%= @user.address_state %></div>
+      <div class="item"><%= @user.zip_code %></div>
+    </div>
+    <div class="item">
+      <i class="mail outline icon"></i>
+      <%= @user.email %>
+    </div>
+    <div class="item">
+      <i class="call icon"></i>
+      <%= @user.format_phone %>
+    </div>
+    <%= link_to "Edit", edit_user_path(@user), class: "ui button", style: "margin-top: 20px;" %>
+    <%= link_to "Delete", user_path(@user), method: :delete, class: "ui button red" %>
+  </div>
 
-<p>You live in <%= @user.state.name %>'s <%= @user.district.name %> district.</p>
+  <div class="eight wide column" style="text-align: right;">
+    
+  </div>
+</div>
 
-<p>Your rep:<p>
-<%= link_to @user.representative.full_name, representative_path(@user.representative) %>
-<p>Your senators:</p>
-<% @user.senators.each do |senator| %>
-<%= link_to senator.full_name, senator_path(senator) %>
+<div class="ui horizontal divider", style="font-size: 1.5rem; margin: 30px 0px">Your Congresspeople</div>
+
+<div class="ui three column grid">
+  <div class="column">
+    <div class="ui fluid card">
+      <a class="image", href=<%= representative_path(@user.representative) %>>
+        <%= image_tag @user.representative.image %>
+      </a>
+      <div class="content">
+        <%= link_to "Rep. #{@user.representative.full_name} — #{@user.representative.party}", representative_path(@user.representative), class: "header" %>
+      </div>
+      <div class="ui green bottom attached button">
+        <i class="call icon"></i>
+        Schedule Call
+      </div>
+    </div>
+  </div>
+  <% @user.senators.each do |senator| %>
+  <div class="column">
+    <div class="ui fluid card">
+      <a class="image", href=<%= senator_path(senator) %>>
+        <%= image_tag senator.image %>
+      </a>
+      <div class="content">
+        <%= link_to "Sen. #{senator.full_name} — #{senator.party}", senator_path(senator), class: "header" %>
+      </div>
+      <div class="ui green bottom attached button">
+        <i class="call icon"></i>
+        Schedule Call
+      </div>
+    </div>
+  </div>
+  <% end %>
+</div>
+
+<div class="ui horizontal divider", style="font-size: 1.5rem; margin: 30px 0px">Your Appointments</div>
+
+<% if @user.appointments.empty? %>
+  <div class="ui disabled header", style="text-align: center;">
+    You currently have no appointments scheduled.
+  </div>
+<% else %>
+  <p>Blah blah blah appointments</p>
 <% end %>

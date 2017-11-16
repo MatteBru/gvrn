@@ -1,3 +1,28 @@
 // Place all the styles related to the Users controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.flag_bg {
+  background-image: url("flag_bg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  z-index: -1;
+}
+
+.ui.fluid.card {
+  a.image {
+    height: 425px;
+    overflow: hidden;
+  }
+}
+
+div.ui.vertical.icon.menu {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin-bottom: 10px;
+}

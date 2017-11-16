@@ -35,4 +35,8 @@ class User < ApplicationRecord
 
   end
 
+  def format_phone
+    "(#{self.phone[0..2]}) #{self.phone[3..5]}-#{self.phone[6..-1]}"
+  end
+
 end
