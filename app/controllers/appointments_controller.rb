@@ -27,6 +27,13 @@ class AppointmentsController < ApplicationController
     redirect_back(fallback_location: root_path)
   end
 
+  def destroy
+    app = Appointment.find(params[:id])
+    flash[:message] = "Your appointment with #{app.congressperson.full_name} on #{app.time.in_time_zone("Eastern Time (US & Canada)").strftime("%A, %B %e at %l:%M %p")} was succesfully deleted"
+    app.destroy
+    redirect_back(fallback_location: root_path)
+  end
+
   private
 
   def appointment_params
