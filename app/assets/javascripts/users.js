@@ -23,7 +23,11 @@ var main = () => {
   });
 
   $('.call_rep').click(() => {
-    $('.representative_modal').modal('show');
+    $('.representative_call_modal').modal('show');
+  })
+
+  $('.schedule_rep').click(() => {
+    $('.representative_schedule_modal').modal('show');
   })
 };
 
