@@ -21,6 +21,7 @@
   </div>
   <div class="actions">
     <%= form_with url: appointments_path do |f| %>
+    <%= f.hidden_field :congressperson_type, value: "representative" %>
     <%= f.hidden_field :congressperson_id, value: representative.id %>
     <div class="ui black deny button">
       Cancel
@@ -36,7 +37,8 @@
     Schedule Appointment
   </div>
   <div class="content">
-    <%= form_with url: root_path, local: true do |f|%>     
+    <%= form_with url: appointments_path do |f|%>
+      <%= f.hidden_field :delay, value: true %>
       <%= select_day(Time.now) %>
       <%= select_time(Time.now) %>
   </div>
