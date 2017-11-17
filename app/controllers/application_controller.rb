@@ -7,6 +7,10 @@ class ApplicationController < ActionController::Base
     !!session[:user_id]
   end
 
+  def authenticate_user
+    redirect_to login_path if !logged_in?
+  end
+
   def get_user_name
     if logged_in?
       @user_name = User.find(session[:user_id]).first_name
