@@ -29,6 +29,22 @@ var main = () => {
   $('.schedule_rep').click(() => {
     $('.representative_schedule_modal').modal('show');
   })
+
+  $('.call_sen_junior').click(() => {
+    $('.senator_call_modal_junior').modal('show');
+  })
+
+  $('.schedule_sen_junior').click(() => {
+    $('.senator_schedule_modal_junior').modal('show');
+  })
+
+  $('.call_sen_senior').click(() => {
+    $('.senator_call_modal_senior').modal('show');
+  })
+
+  $('.schedule_sen_senior').click(() => {
+    $('.senator_schedule_modal_senior').modal('show');
+  })
 };
 
 $(document).ready(main);

@@ -1,31 +1,33 @@
-<div class="column">
-  <div class="ui fluid card">
-    <a class="image", href=<%= representative_path(representative) %>>
-      <%= image_tag representative.image %>
-    </a>
-    <div class="content">
-      <%= link_to "Rep. #{representative.full_name} — #{representative.party}", representative_path(representative), class: "header" %>
-    </div>
-    <% if logged_in? %>
-      <div class="ui bottom attached buttons">
-        <button class="ui button schedule_rep" style="width: 24%;"><i class="calendar icon"></i>Schedule</button>
-        <div class="or"></div>
-        <button class="ui positive button call_rep"><i class="call icon"></i>Call</button>
-      </div>
-    <% else %>
-      <%= link_to "Log In to Schedule Call", login_path, class: "ui bottom attached button"%>
+<div class="ui fluid card" style="box-shadow: none; margin-top: -20px;">
+  <div class="content">
+    <h1 style="font-size: 2rem; color: black;"><%= @representative.full_name %></h1>
+    <h3 style="margin-top: -10px; color: grey;">Representative from <%= @representative.state.name %></h3>
+    <% if @representative.leadership_role %>
+      <h3 style="margin-top: -10px; color: grey;"><%= @representative.leadership_role %></h3>
     <% end %>
   </div>
+  <div class="image">
+    <img class="ui medium image" src=<%= @representative.image %>>
+  </div>
+  <% if logged_in? %>
+    <div class="ui bottom attached buttons">
+      <button class="ui button schedule_rep" style="width: 24%;"><i class="calendar icon"></i>Schedule</button>
+      <div class="or"></div>
+      <button class="ui positive button call_rep"><i class="call icon"></i>Call</button>
+    </div>
+  <% else %>
+    <%= link_to "Log In to Schedule Call", login_path, class: "ui bottom attached button"%>
+  <% end %>
 </div>
 
 <div class="ui mini modal representative_call_modal">
   <i class="close icon"></i>
   <div class="content">
-    <p style="color: black;">Call Rep <%= representative.full_name %>?<p>
+    <p style="color: black;">Call Rep <%= @representative.full_name %>?<p>
   </div>
   <div class="actions">
     <%= form_with url: appointments_path, local: true do |f| %>
-    <%= f.hidden_field :congressperson_id, value: representative.id %>
+    <%= f.hidden_field :congressperson_id, value: @representative.id %>
     <div class="ui black deny button">
       Cancel
     </div>
@@ -44,7 +46,7 @@
       <div class="fields">
         <%= f.hidden_field "appointment[delay]", value: true %>
         <%= f.hidden_field "appointment[congressperson_type]", value: "representative"%>
-        <%= f.hidden_field "appointment[congressperson_id]", value: representative.id %>
+        <%= f.hidden_field "appointment[congressperson_id]", value: @representative.id %>
         <%= date_select("appointment", "date", {start_year: 2017, end_year: 2018}, {class: "ui dropdown"}) %>
         <%= time_select("appointment", "time", {minute_step: 5, prompt: {hour: 'Hour', minute: 'Minute'}, ampm: true}, {class: "ui dropdown"}) %>
       </div>
