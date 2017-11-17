@@ -7,6 +7,7 @@ class AppointmentsController < ApplicationController
     user = User.find(session[:user_id])
     time = params[:time] if params[:delay]
     Appointment.create(user: user, time: time, congressperson: congressperson)
+    flash[:message] = "Call Initiated"
     redirect_to user_path(user)
   end
 
