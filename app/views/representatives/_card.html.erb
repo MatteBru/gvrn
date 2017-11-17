@@ -7,20 +7,20 @@
       <%= link_to "Rep. #{representative.full_name} — #{representative.party}", representative_path(representative), class: "header" %>
     </div>
     <div class="ui bottom attached buttons">
-      <button class="ui button schedule" style="width: 24%;"><i class="calendar icon"></i>Schedule</button>
+      <button class="ui button schedule_rep" style="width: 24%;"><i class="calendar icon"></i>Schedule</button>
       <div class="or"></div>
       <button class="ui positive button call_rep"><i class="call icon"></i>Call</button>
     </div>
   </div>
 </div>
 
-<div class="ui mini modal representative_modal">
+<div class="ui mini modal representative_call_modal">
   <i class="close icon"></i>
   <div class="content">
     <p style="color: black;">Call Rep <%= representative.full_name %>?<p>
   </div>
   <div class="actions">
-    <%= form_with url: appointments_path do |f| %>
+    <%= form_with url: appointments_path, local: true do |f| %>
     <%= f.hidden_field :congressperson_id, value: representative.id %>
     <div class="ui black deny button">
       Cancel
@@ -30,15 +30,20 @@
   </div>
 </div>
 
-<div class="ui tiny modal">
+<div class="ui tiny modal representative_schedule_modal">
   <i class="close icon"></i>
   <div class="header">
     Schedule Appointment
   </div>
   <div class="content">
-    <%= form_with url: root_path, local: true do |f|%>     
-      <%= select_day(Time.now) %>
-      <%= select_time(Time.now) %>
+    <%= form_with url: appointments_path, local: true, method: "post", class: "ui form" do |f| %>
+      <div class="fields">
+        <%= f.hidden_field "appointment[:delay]", value: true %>
+        <%= f.hidden_field "appointment[:congressperson_type]", value: "representative"%>
+        <%= f.hidden_field "appointment[:congressperson_id]", value: representative.id %>
+        <%= date_select("appointment", "date", {start_year: 2017, end_year: 2018}, {class: "ui dropdown"}) %>
+        <%= time_select("appointment", "time", {minute_step: 5, prompt: {hour: 'Hour', minute: 'Minute'}, ampm: true}, {class: "ui dropdown"}) %>
+      </div>
   </div>
   <div class="actions">
     <div class="ui black deny button">
