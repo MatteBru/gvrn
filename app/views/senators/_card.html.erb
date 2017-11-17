@@ -25,7 +25,8 @@
   </div>
   <div class="actions">
     <%= form_with url: appointments_path, local: true do |f| %>
-    <%= f.hidden_field :congressperson_id, value: sen.id %>
+    <%= f.hidden_field "appointment[congressperson_type]", value: "senator"%>
+    <%= f.hidden_field "appointment[congressperson_id]", value: sen.id %>
     <div class="ui black deny button">
       Cancel
     </div>
@@ -46,7 +47,7 @@
         <%= f.hidden_field "appointment[congressperson_type]", value: "senator"%>
         <%= f.hidden_field "appointment[congressperson_id]", value: sen.id %>
         <%= date_select("appointment", "date", {start_year: 2017, end_year: 2018}, {class: "ui dropdown"}) %>
-        <%= time_select("appointment", "time", {minute_step: 5, prompt: {hour: 'Hour', minute: 'Minute'}, ampm: true}, {class: "ui dropdown"}) %>
+        <%= time_select("appointment", "time", {prompt: {hour: 'Hour', minute: 'Minute'}, ampm: true}, {class: "ui dropdown"}) %>
       </div>
   </div>
   <div class="actions">

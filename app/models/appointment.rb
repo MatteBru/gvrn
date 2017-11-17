@@ -1,10 +1,11 @@
 class Appointment < ApplicationRecord
-  belongs_to :user, dependent: :destroy
-  belongs_to :congressperson, polymorphic: true, dependent: :destroy
+  belongs_to :user
+  belongs_to :congressperson, polymorphic: true
 
   include Twilier
   after_create :make_call, :remind, :confirm, if: :scheduled?
   after_create :call_now, if: :immediate?
+
 
   def immediate?
     self.time < Time.now + 5

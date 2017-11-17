@@ -47,7 +47,7 @@
         <%= f.hidden_field "appointment[congressperson_type]", value: "representative"%>
         <%= f.hidden_field "appointment[congressperson_id]", value: representative.id %>
         <%= date_select("appointment", "date", {start_year: 2017, end_year: 2018}, {class: "ui dropdown"}) %>
-        <%= time_select("appointment", "time", {minute_step: 5, prompt: {hour: 'Hour', minute: 'Minute'}, ampm: true}, {class: "ui dropdown"}) %>
+        <%= time_select("appointment", "time", {prompt: {hour: 'Hour', minute: 'Minute'}, ampm: true}, {class: "ui dropdown"}) %>
       </div>
   </div>
   <div class="actions">

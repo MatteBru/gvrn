@@ -2,7 +2,7 @@ require "json"
 require "http"
 require "optparse"
 class User < ApplicationRecord
-  has_many :appointments
+  has_many :appointments, dependent: :destroy
   belongs_to :district
   has_one :representative, through: :district
   has_one :state, through: :district
