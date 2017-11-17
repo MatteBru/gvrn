@@ -46,45 +46,9 @@
 <div class="ui horizontal divider", style="font-size: 1.5rem; margin: 30px 0px">Congresspeople</div>
 
 <div class="ui three column grid">
-  <div class="column">
-    <div class="ui fluid card">
-      <a class="image", href=<%= representative_path(@user.representative) %>>
-        <%= image_tag @user.representative.image %>
-      </a>
-      <div class="content">
-        <%= link_to "Rep. #{@user.representative.full_name} — #{@user.representative.party}", representative_path(@user.representative), class: "header" %>
-      </div>
-      <% if logged_in? %>
-        <div class="ui bottom attached buttons">
-          <button class="ui button" style="width: 24%;"><i class="calendar icon"></i>Schedule</button>
-          <div class="or"></div>
-          <button class="ui positive button"><i class="call icon"></i>Call</button>
-        </div>
-      <% else %>
-        <%= link_to "Log In to Schedule Call", login_path, class: "ui bottom attached button"%>
-      <% end %>
-    </div>
-  </div>
+  <%= render "representatives/card", representative: @user.representative %>
   <% @user.state.senators.each do |senator| %>
-  <div class="column">
-    <div class="ui fluid card">
-      <a class="image", href=<%= senator_path(senator) %>>
-        <%= image_tag senator.image %>
-      </a>
-      <div class="content">
-        <%= link_to "Sen. #{senator.full_name} — #{senator.party}", senator_path(senator), class: "header" %>
-      </div>
-      <% if logged_in? %>
-        <div class="ui bottom attached buttons">
-          <button class="ui button" style="width: 24%;"><i class="calendar icon"></i>Schedule</button>
-          <div class="or"></div>
-          <button class="ui positive button"><i class="call icon"></i>Call</button>
-        </div>
-      <% else %>
-        <%= link_to "Log In to Schedule Call", login_path, class: "ui bottom attached button"%>
-      <% end %>
-    </div>
-  </div>
+    <%= render "senators/card", sen: senator %>
   <% end %>
 </div>
 
