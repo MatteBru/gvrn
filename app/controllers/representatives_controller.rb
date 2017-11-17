@@ -1,16 +1,17 @@
 class RepresentativesController < ApplicationController
   before_action :set_representative, only: [:show]
   helper_method :parse_dw_score
-  
+
+
   def index
     @states = State.all
   end
-  
+
   def show
   end
-  
+
   private
-  
+
   def set_representative
     @representative = Representative.find(params[:id])
   end

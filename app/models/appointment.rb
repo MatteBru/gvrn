@@ -7,7 +7,7 @@ class Appointment < ApplicationRecord
   after_create :call_now, if: :immediate?
 
   def immediate?
-    self.time < time.now + 5
+    self.time < Time.now + 5
   end
 
   def scheduled?
