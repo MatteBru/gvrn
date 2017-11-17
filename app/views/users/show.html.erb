@@ -1,15 +1,47 @@
-<h1>Hello, <%= @user.name %></h1>
+<div class="ui grid">
+  <div class="four wide column">
+    <h1>Hello, <%= @user.first_name %></h1>
+    <h3>Your info:</h3>
+    <div class="ui list">
+      <div class="item">
+        <div class="header"><%= @user.state.name %>'s <%= @user.district.name.to_i.ordinalize %> district
+        </div>
+      </div>
+      <div class="item"><%= @user.address %></div>
+      <div class="item"><%= @user.city %>, <%= @user.address_state %></div>
+      <div class="item"><%= @user.zip_code %></div>
+    </div>
+    <div class="item">
+      <i class="mail outline icon"></i>
+      <%= @user.email %>
+    </div>
+    <div class="item">
+      <i class="call icon"></i>
+      <%= @user.format_phone %>
+    </div>
+    <%= link_to "Edit", edit_user_path(@user), class: "ui button", style: "margin-top: 20px;" %>
+    <%= link_to "Delete", user_path(@user), method: :delete, class: "ui button red" %>
+  </div>
+  <div class="twelve wide column">
+    <style>.embed-container {position: relative; padding-bottom: 80%; height: 0; max-width: 100%;} .embed-container iframe, .embed-container object, .embed-container iframe{position: absolute; top: 0; left: 0; width: 100%; height: 100%;} small{position: absolute; z-index: 40; bottom: 0; margin-bottom: -15px;}</style><div class="embed-container"><iframe width="500" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" title="districts 2k17" src="//matteo-bruni.maps.arcgis.com/apps/Embed/index.html?webmap=a8c6586acb5f44738ebbf9e86b477084&amp;&feature=USA_115th_Congressional_Districts_2717;DISTRICTID;<%= @user.map_id%>&amp;zoom=true&amp;previewImage=false&amp;scale=true&amp;disable_scroll=true&amp;theme=light"></iframe></div>
+  </div>
+</div>
 
+<div class="ui horizontal divider", style="font-size: 1.5rem; margin: 50px 0px">Your Congresspeople</div>
 
+<div class="ui three column grid">
+  <%= render "representatives/card", representative: @user.representative %>
+  <% @user.senators.each do |senator| %>
+    <%= render "senators/card", senator: senator %>
+  <% end %>
+</div>
 
-<style>.embed-container {position: relative; padding-bottom: 80%; height: 0; max-width: 100%;} .embed-container iframe, .embed-container object, .embed-container iframe{position: absolute; top: 0; left: 0; width: 100%; height: 100%;} small{position: absolute; z-index: 40; bottom: 0; margin-bottom: -15px;}</style><div class="embed-container"><iframe width="500" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" title="districts 2k17" src="//matteo-bruni.maps.arcgis.com/apps/Embed/index.html?webmap=a8c6586acb5f44738ebbf9e86b477084&amp;&feature=USA_115th_Congressional_Districts_2717;DISTRICTID;<%= @user.map_id%>&amp;zoom=true&amp;previewImage=false&amp;scale=true&amp;disable_scroll=true&amp;theme=light"></iframe></div>
+<div class="ui horizontal divider", style="font-size: 1.5rem; margin: 50px 0px">Your Appointments</div>
 
-
-<p>You live in <%= @user.state.name %>'s <%= @user.district.name %> district.</p>
-
-<p>Your rep:<p>
-<%= link_to @user.representative.full_name, representative_path(@user.representative) %>
-<p>Your senators:</p>
-<% @user.senators.each do |senator| %>
-<%= link_to senator.full_name, senator_path(senator) %>
+<% if @user.appointments.empty? %>
+  <div class="ui disabled header", style="text-align: center;">
+    You currently have no appointments scheduled.
+  </div>
+<% else %>
+  <p>Blah blah blah appointments</p>
 <% end %>

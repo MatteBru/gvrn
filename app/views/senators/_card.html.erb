@@ -1,0 +1,15 @@
+<div class="column">
+  <div class="ui fluid card">
+    <a class="image", href=<%= senator_path(senator) %>>
+      <%= image_tag senator.image %>
+    </a>
+    <div class="content">
+      <%= link_to "Sen. #{senator.full_name} — #{senator.party}", senator_path(senator), class: "header" %>
+    </div>
+    <div class="ui bottom attached buttons">
+      <button class="ui button schedule" style="width: 24%;"><i class="calendar icon"></i>Schedule</button>
+      <div class="or"></div>
+      <button class="ui positive button"><i class="call icon"></i>Call</button>
+    </div>
+  </div>
+</div>

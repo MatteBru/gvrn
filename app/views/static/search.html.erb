@@ -1,0 +1,91 @@
+<div class="ui grid">
+  <div class="eight wide column">
+    <h2>Showing results for <%= @user.state.name %>'s <%= @user.district.name.to_i.ordinalize %> District</h2>
+    <div class="ui segment">
+      <h4 class="ui header">Search Again</h4>
+      <div class="ui divider"></div>
+      <%= form_with url: search_path, method: 'get', class: 'ui form', local: true do |f| %>
+        <div class="sixteen wide field">
+          <label>Address</label>
+          <%= f.text_field :address, class: "ui input", :placeholder => "Address" %>
+        </div>
+        <div class="fields">
+          <div class="eight wide field">
+            <label>City</label>
+            <%= f.text_field :city, class: "ui input", :placeholder => "City" %>
+          </div> 
+          <div class="four wide field">
+            <label>State</label>
+            <div class="ui selection fluid dropdown", id="select">
+              <%= f.hidden_field :address_state %>
+              <i class="dropdown icon"></i>
+              <div class="default text">State</div>
+              <div class="menu">
+                <% State.all.each do |state| %>
+                  <div class="item" data-value=<%= state.abbreviation %>><%= state.abbreviation %></div>
+                <% end %>
+              </div>
+            </div>
+          </div> 
+          <div class="four wide field">
+            <label>Zip</label>
+            <%= f.text_field :zip_code, class: "ui input", :placeholder => "Zip" %>
+          </div> 
+        </div>
+        <div class="field">
+          <%= f.submit "Search", class: "ui blue button" %>
+        </div>
+      <% end %>
+    </div> <!-- ui segment -->
+  </div> <!-- eight wide column -->
+  <div class="eight wide column">
+    <style>.embed-container {position: relative; padding-bottom: 80%; height: 0; max-width: 100%;} .embed-container iframe, .embed-container object, .embed-container iframe{position: absolute; top: 0; left: 0; width: 100%; height: 100%;} small{position: absolute; z-index: 40; bottom: 0; margin-bottom: -15px;}</style><div class="embed-container"><iframe width="500" height="400" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" title="districts 2k17" src="//matteo-bruni.maps.arcgis.com/apps/Embed/index.html?webmap=a8c6586acb5f44738ebbf9e86b477084&amp;&feature=USA_115th_Congressional_Districts_2717;DISTRICTID;<%= @user.map_id%>&amp;zoom=true&amp;previewImage=false&amp;scale=true&amp;disable_scroll=true&amp;theme=light"></iframe></div>
+  </div> <!-- eight wide column -->
+</div> <!-- ui grid -->
+
+<div class="ui horizontal divider", style="font-size: 1.5rem; margin: 30px 0px">Congresspeople</div>
+
+<div class="ui three column grid">
+  <div class="column">
+    <div class="ui fluid card">
+      <a class="image", href=<%= representative_path(@user.representative) %>>
+        <%= image_tag @user.representative.image %>
+      </a>
+      <div class="content">
+        <%= link_to "Rep. #{@user.representative.full_name} — #{@user.representative.party}", representative_path(@user.representative), class: "header" %>
+      </div>
+      <% if logged_in? %>
+        <div class="ui bottom attached buttons">
+          <button class="ui button" style="width: 24%;"><i class="calendar icon"></i>Schedule</button>
+          <div class="or"></div>
+          <button class="ui positive button"><i class="call icon"></i>Call</button>
+        </div>
+      <% else %>
+        <%= link_to "Log In to Schedule Call", login_path, class: "ui bottom attached button"%>
+      <% end %>
+    </div>
+  </div>
+  <% @user.state.senators.each do |senator| %>
+  <div class="column">
+    <div class="ui fluid card">
+      <a class="image", href=<%= senator_path(senator) %>>
+        <%= image_tag senator.image %>
+      </a>
+      <div class="content">
+        <%= link_to "Sen. #{senator.full_name} — #{senator.party}", senator_path(senator), class: "header" %>
+      </div>
+      <% if logged_in? %>
+        <div class="ui bottom attached buttons">
+          <button class="ui button" style="width: 24%;"><i class="calendar icon"></i>Schedule</button>
+          <div class="or"></div>
+          <button class="ui positive button"><i class="call icon"></i>Call</button>
+        </div>
+      <% else %>
+        <%= link_to "Log In to Schedule Call", login_path, class: "ui bottom attached button"%>
+      <% end %>
+    </div>
+  </div>
+  <% end %>
+</div>
+
+<%# <style>.embed-container {position: relative; padding-bottom: 80%; height: 0; max-width: 100%;} .embed-container iframe, .embed-container object, .embed-container iframe{position: absolute; top: 0; left: 0; width: 100%; height: 100%;} small{position: absolute; z-index: 40; bottom: 0; margin-bottom: -15px;}</style><div class=“embed-container”><iframe width=“500" height=“400” frameborder=“0" scrolling=“no” marginheight=“0" marginwidth=“0” title=“districts 2k17" src=“//matteo-bruni.maps.arcgis.com/apps/Embed/index.html?webmap=a8c6586acb5f44738ebbf9e86b477084&amp;extent=-74.7461,40.8663,-72.0544,41.6119&amp;zoom=true&amp;previewImage=false&amp;scale=true&amp;disable_scroll=true&amp;theme=light”></iframe></div> %>

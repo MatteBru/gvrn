@@ -23,15 +23,12 @@ class User < ApplicationRecord
   end
 
   def dist_search
-    # byebug
     params = {
       address: self.addr_string,
       includeOffices: false,
       levels: "country"
     }
     url = "#{CIV_HOST}?key=#{GCODE_TOKEN}"
-
-    byebug
 
     response = HTTP.get(url, params: params)
     gci_api_hash = response.parse
@@ -56,6 +53,10 @@ class User < ApplicationRecord
     self.city = norm_addr_hash["city"]
     self.address_state = norm_addr_hash["state"]
     self.zip_code = norm_addr_hash["zip"]
+  end
+
+  def format_phone
+    "(#{self.phone[0..2]}) #{self.phone[3..5]}-#{self.phone[6..-1]}"
   end
 
   def map_id

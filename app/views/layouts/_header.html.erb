@@ -4,7 +4,7 @@
       <%= image_tag "logo.png", class: "logo" %>
       gvrn
     </a>
-    <%= link_to "Home", root_path, class: "item" %>
+    <%# link_to "Home", root_path, class: "item" %>
     <div class="ui simple dropdown item">
       Senate <i class="dropdown icon"></i>
       <div class="menu">
@@ -25,7 +25,7 @@
     <div class="ui simple dropdown item">
       House <i class="dropdown icon"></i>
       <div class="menu">
-        <%= link_to "All Representatives", senators_path, class: "item" %>
+        <%= link_to "All Representatives", representatives_path, class: "item" %>
         <!-- <div class="divider"></div>
         <div class="header">Header Item</div>
         <div class="item">
@@ -41,7 +41,10 @@
     </div>
     <div class="right menu">
       <% if logged_in? %>
-        <%= link_to "My Profile", user_path(session[:user_id]), class: "item" %>
+        <a class="item", href=<%= user_path(session[:user_id])%>>
+          <i class="user icon"></i>
+          <%= get_user_name %>
+        </a>
         <div class="item">
           <%= link_to "Log Out", session_path(session), method: :delete, class: "ui button" %>
         </div>

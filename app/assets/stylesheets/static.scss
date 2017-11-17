@@ -13,6 +13,25 @@
   z-index: -1;
 }
 
-#welcome {
+.content {
+  padding-top: 15%;
   color: white;
+  h1 {
+    font-size: 4rem;
+  }
+  h4 {
+    margin-top: -1rem;
+    color: lightgray;
+  }
+  h3 {
+    margin-top: 4rem;
+  }
+  div.ui.segment {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    label {
+      color: white;
+    }
+  }
 }
