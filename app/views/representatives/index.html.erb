@@ -1,11 +1,21 @@
-<h1>Representatives</h1>
+<h1 style="text-align: center; padding-bottom: 30px;">Representatives</h1>
+
 <% @states.each do |state| %>
-  <p><%= state.name%></p>
-  <ul>
-  <% state.districts.each do |district| %>
-    <% if district.representative.in_office %>
-      <li><%= link_to district.representative.full_name, representative_path(district.representative) %></li>
+<table class="ui striped table">
+  <thead>
+    <tr>
+      <th class="center aligned" colspan="2"><%= state.name %></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% state.alphabetic_reps.each do |rep| %>
+      <tr>
+          <td class="center aligned eight wide"><%= link_to rep.full_name, representative_path(rep) %></td>
+          <td class="center aligned eight wide"><%= rep.district.fancy %></td>
+      </tr>
+        <% end %>
+  </tbody>
+</table>
     <% end %>
-  <% end %>
-  </ul>
-<% end %>
+
+<br>

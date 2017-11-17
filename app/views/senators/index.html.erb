@@ -1,11 +1,22 @@
-<h1>Senators</h1>
-<% @states.each do |state| %>
-  <p><%= state.name%></p>
-  <ul>
-  <% state.senators.each do |senator| %>
-    <% if senator.in_office %>
-      <li><%= link_to senator.full_name, senator_path(senator) %></li>
+<h1 style="text-align: center; padding-bottom: 30px;">Senators</h1>
+
+<table class="ui large very padded table">
+  <thead>
+    <tr>
+      <th class="center aligned four wide">Junior Senator</th>
+      <th class="center aligned four wide">State</th>
+      <th class="center aligned four wide">Senior Senator</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @states.each do |state| %>
+      <tr>
+        <td class="center aligned"><%= link_to state.junior_senator.full_name, senator_path(state.junior_senator) %></td>
+        <td class="center aligned"><strong><%= state.name %></strong></td>
+        <td class="center aligned"><%= link_to state.senior_senator.full_name, senator_path(state.senior_senator) %></td>
+      </tr>
     <% end %>
-  <% end %>
-  </ul>
-<% end %>
+  </tbody>
+</table>
+
+<br>
