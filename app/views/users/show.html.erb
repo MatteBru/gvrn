@@ -44,6 +44,29 @@
       You currently have no appointments scheduled.
     </div>
   <% else %>
-    <p>Blah blah blah appointments</p>
+    <table class="ui single line table">
+      <thead>
+        <tr>
+          <th>Congressperson</th>
+          <th>Time of Call</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @user.future_appointments.each do |appointment| %>
+          <tr>
+            <% if appointment.congressperson_type == "Representative" %>
+              <td><%= link_to "#{appointment.congressperson.full_name}", representative_path(appointment.congressperson) %></td>
+            <% elsif appointment.congressperson_type == "Senator" %>
+              <td><%= link_to "#{appointment.congressperson.full_name}", senator_path(appointment.congressperson) %></td>
+            <% end %>
+            <td><%= appointment.time.in_time_zone("Eastern Time (US & Canada)").strftime("%A, %B %e at %l:%M %p") %></td>
+            <td><%= link_to "Edit", edit_appointment_path(appointment), class: "ui mini button" %></td>
+            <td><%= link_to "Delete", appointment_path(appointment), method: "delete", class: "ui mini red button"%></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   <% end %>
 </div>

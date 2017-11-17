@@ -78,6 +78,8 @@ class User < ApplicationRecord
     @code == entered
   end
 
-
+  def future_appointments
+    self.appointments.where("time > ?", Time.now).order("time")
+  end
 
 end
