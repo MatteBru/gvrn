@@ -85,16 +85,74 @@
     <div class="row" style="margin-top: 10%;">
       <div class="ui small four statistics">
         <% case parse_dw_score %>
+        <% when "solid liberal"%>
+        <div class="statistic" style="margin-top: -13px">
+          <div class="value" style="font-size: 2rem !important;">
+            <%= @senator.interpret_dw_nominate_score[0] %><br>
+            <%= @senator.interpret_dw_nominate_score[1] %>
+          </div>
+          <div class="label">
+            Partisan Lean
+          </div>
+        </div>
         <% when "liberal"%>
         <div class="statistic" style="margin-top: 14px">
-            <div class="value" style="font-size: 2rem !important;">
-              <%= @senator.interpret_dw_nominate_score %>
-            </div>
-            <div class="label">
-              Partisan Lean
-            </div>
-          <% end %>
+          <div class="value" style="font-size: 2rem !important;">
+            <%= @senator.interpret_dw_nominate_score %>
+          </div>
+          <div class="label">
+            Partisan Lean
+          </div>
         </div>
+        <% when "moderate liberal"%>
+        <div class="statistic" style="margin-top: -13px">
+          <div class="value" style="font-size: 2rem !important;">
+            <%= @senator.interpret_dw_nominate_score[0] %><br>
+            <%= @senator.interpret_dw_nominate_score[1] %>
+          </div>
+          <div class="label">
+            Partisan Lean
+          </div>
+        </div>
+        <% when "centrist"%>
+        <div class="statistic" style="margin-top: 14px">
+          <div class="value" style="font-size: 2rem !important;">
+            <%= @senator.interpret_dw_nominate_score %>
+          </div>
+          <div class="label">
+            Partisan Lean
+          </div>
+        </div>
+        <% when "moderate conservative"%>
+        <div class="statistic" style="margin-top: -8px">
+          <div class="value" style="font-size: 1.8rem !important;">
+            <%= @senator.interpret_dw_nominate_score[0] %><br>
+            <%= @senator.interpret_dw_nominate_score[1] %>
+          </div>
+          <div class="label">
+            Partisan Lean
+          </div>
+        </div>
+        <% when "conservative"%>
+        <div class="statistic" style="margin-top: 16px">
+          <div class="value" style="font-size: 1.8rem !important;">
+            <%= @senator.interpret_dw_nominate_score %>
+          </div>
+          <div class="label">
+            Partisan Lean
+          </div>
+        </div>
+        <% when "solid conservative"%>
+        <div class="statistic" style="margin-top: -8px">
+          <div class="value" style="font-size: 1.8rem !important;">
+            <%= @senator.interpret_dw_nominate_score[0] %><br>
+            <%= @senator.interpret_dw_nominate_score[1] %>
+          </div>
+          <div class="label">
+            Partisan Lean
+          </div>
+        </div>
+        <% end %>
         <div class="statistic">
           <div class="value">
             <%= @senator.total_votes %>

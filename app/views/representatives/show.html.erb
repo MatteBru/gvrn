@@ -1,0 +1,199 @@
+<div class="ui grid">
+  <div class="five wide column">
+    <div class="ui fluid card" style="box-shadow: none; margin-top: -20px;">
+      <div class="content">
+        <h1 style="font-size: 2rem; color: black;"><%= @representative.full_name %></h1>
+        <h3 style="margin-top: -10px; color: grey;">Representative from <%= @representative.state.name %></h3>
+        <% if @representative.leadership_role %>
+          <h3 style="margin-top: -10px; color: grey;"><%= @representative.leadership_role %></h3>
+        <% end %>
+      </div>
+      <div class="image">
+        <img class="ui medium image" src=<%= @representative.image %>>
+      </div>
+      <% if logged_in? %>
+        <div class="ui green bottom attached button">
+          <i class="call icon"></i>
+          Schedule Call
+        </div>
+      <% else %>
+        <%= link_to "Log In to Schedule Call", login_path, class: "ui bottom attached button"%>
+      <% end %>
+    </div>
+  </div>
+  <div class="eleven wide column">
+    <div class="row">
+      <div class="social" style="text-align: right;">
+        <a class="ui facebook button" href="https://www.facebook.com/<%= @representative.facebook_account %>">
+          <i class="facebook icon"></i>
+          Facebook
+        </a>
+        <a class="ui twitter button" href="https://www.twitter.com/<%= @representative.twitter_account %>">
+          <i class="twitter icon"></i>
+          Twitter
+        </a>
+        <a class="ui youtube button" href="https://www.youtube.com/<%= @representative.youtube_account %>">
+          <i class="youtube icon"></i>
+          YouTube
+        </a>
+        <a class="ui black button" href=<%= @representative.url %>>
+          <i class="address book outline icon"></i>
+          Website
+        </a>
+        <a class="ui yellow button" href=<%= @representative.wikipedia %>>
+          <i class="wikipedia icon"></i>
+          Wiki
+        </a>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 10%">
+      <div class="ui small four statistics">
+        <div class="statistic">
+          <div class="value">
+            <%= @representative.party %>
+          </div>
+          <div class="label">
+            Party
+          </div>
+        </div>
+        <div class="statistic">
+          <div class="value">
+            <%= @representative.calculate_age %>
+          </div>
+          <div class="label">
+            Age
+          </div>
+        </div>
+        <div class="statistic">
+          <div class="value">
+            <%= @representative.get_start_year %>
+          </div>
+          <div class="label">
+            In Power Since
+          </div>
+        </div>
+        <div class="statistic">
+          <div class="value">
+            <%= @representative.next_election %>
+          </div>
+          <div class="label">
+            Next Election
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top: 10%;">
+      <div class="ui small four statistics">
+        <% case parse_dw_score %>
+        <% when "solid liberal"%>
+        <div class="statistic" style="margin-top: -13px">
+          <div class="value" style="font-size: 2rem !important;">
+            <%= @representative.interpret_dw_nominate_score[0] %><br>
+            <%= @representative.interpret_dw_nominate_score[1] %>
+          </div>
+          <div class="label">
+            Partisan Lean
+          </div>
+        </div>
+        <% when "liberal"%>
+        <div class="statistic" style="margin-top: 14px">
+          <div class="value" style="font-size: 2rem !important;">
+            <%= @representative.interpret_dw_nominate_score %>
+          </div>
+          <div class="label">
+            Partisan Lean
+          </div>
+        </div>
+        <% when "moderate liberal"%>
+        <div class="statistic" style="margin-top: -13px">
+          <div class="value" style="font-size: 2rem !important;">
+            <%= @representative.interpret_dw_nominate_score[0] %><br>
+            <%= @representative.interpret_dw_nominate_score[1] %>
+          </div>
+          <div class="label">
+            Partisan Lean
+          </div>
+        </div>
+        <% when "centrist"%>
+        <div class="statistic" style="margin-top: 14px">
+          <div class="value" style="font-size: 2rem !important;">
+            <%= @representative.interpret_dw_nominate_score %>
+          </div>
+          <div class="label">
+            Partisan Lean
+          </div>
+        </div>
+        <% when "moderate conservative"%>
+        <div class="statistic" style="margin-top: -8px">
+          <div class="value" style="font-size: 1.8rem !important;">
+            <%= @representative.interpret_dw_nominate_score[0] %><br>
+            <%= @representative.interpret_dw_nominate_score[1] %>
+          </div>
+          <div class="label">
+            Partisan Lean
+          </div>
+        </div>
+        <% when "conservative"%>
+        <div class="statistic" style="margin-top: 16px">
+          <div class="value" style="font-size: 1.8rem !important;">
+            <%= @representative.interpret_dw_nominate_score %>
+          </div>
+          <div class="label">
+            Partisan Lean
+          </div>
+        </div>
+        <% when "solid conservative"%>
+        <div class="statistic" style="margin-top: -8px">
+          <div class="value" style="font-size: 1.8rem !important;">
+            <%= @representative.interpret_dw_nominate_score[0] %><br>
+            <%= @representative.interpret_dw_nominate_score[1] %>
+          </div>
+          <div class="label">
+            Partisan Lean
+          </div>
+        </div>
+        <% end %>
+        <div class="statistic">
+          <div class="value">
+            <%= @representative.total_votes %>
+          </div>
+          <div class="label">
+            Total Votes
+          </div>
+        </div>
+        <div class="statistic">
+          <div class="value">
+            <%= @representative.missed_votes %>
+          </div>
+          <div class="label">
+            Missed Votes
+          </div>
+        </div>
+        <div class="statistic">
+          <div class="value">
+            <%= @representative.votes_with_party_pct.to_f.round %>%
+          </div>
+          <div class="label">
+            Votes With Party
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ui vertical icon menu">
+      <a class="item">
+        <i class="marker icon"></i>
+        Office
+      </a>
+      <a class="item">
+        <i class="call icon"></i>
+        Phone
+      </a>
+      <a class="item" href=<%= @representative.contact_form %>>
+        <i class="comment outline icon"></i>
+        Contact
+      </a>
+    </div>
+  </div>
+</div>
+
+<p style="margin: 50px 20px; font-size: 1.3rem; line-height: 2rem;"><%= raw @representative.biography %></p>

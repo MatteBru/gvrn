@@ -22,19 +22,19 @@ class Senator < ApplicationRecord
   def interpret_dw_nominate_score
     case self.dw_nominate
     when -1.0...-0.5
-      "solid liberal"
+      ["solid", "liberal"]
     when -0.5...-0.3
       "liberal"
     when -0.3...-0.1
-      "moderate liberal"
+      ["moderate", "liberal"]
     when -0.1...0.1
       "centrist"
     when 0.1...0.3
-      "moderate conservative"
+      ["moderate", "conservative"]
     when 0.3...0.5
       "conservative"
     when 0.5..1.0
-      "solid conservative"
+      ["solid", "conservative"]
     else
       "N/A"
     end

@@ -21,6 +21,10 @@ var main = () => {
       }
     } 
   });
+
+  $('.call_rep').click(() => {
+    $('.representative_modal').modal('show');
+  })
 };
 
 $(document).ready(main);

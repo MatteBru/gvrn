@@ -3,7 +3,20 @@ class Appointment < ApplicationRecord
   belongs_to :congressperson, polymorphic: true, dependent: :destroy
 
   include Twilier
-  after_create :make_call, :remind, :confirm
+  after_create :make_call, :remind, :confirm, if: :scheduled?
+  after_create :call_now, if: :immediate?
+
+  def immediate?
+    self.time < time.now + 5
+  end
+
+  def scheduled?
+    !self.immediate?
+  end
+
+  def call_now
+    start_call
+  end
 
   def make_call
     start_call
