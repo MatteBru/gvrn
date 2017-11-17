@@ -32,7 +32,7 @@
 <div class="ui three column grid">
   <%= render "representatives/card", representative: @user.representative %>
   <% @user.senators.each do |senator| %>
-    <%= render "senators/card", senator: senator %>
+    <%= render "senators/card", sen: senator %>
   <% end %>
 </div>
 

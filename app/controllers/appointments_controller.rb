@@ -24,7 +24,7 @@ class AppointmentsController < ApplicationController
       flash[:message] = "Call Initiated"
     end
     Appointment.create(user: user, time: time, congressperson: congressperson)
-    redirect_to user_path(user)
+    redirect_back(fallback_location: root_path)
   end
 
   private

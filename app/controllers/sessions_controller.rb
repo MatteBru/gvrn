@@ -8,7 +8,7 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil 
-    redirect_to root_path
+    redirect_back(fallback_location: root_path)
   end
 
   private

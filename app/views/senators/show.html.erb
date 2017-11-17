@@ -1,25 +1,6 @@
 <div class="ui grid">
   <div class="five wide column">
-    <div class="ui fluid card" style="box-shadow: none; margin-top: -20px;">
-      <div class="content">
-        <h1 style="font-size: 2rem; color: black;"><%= @senator.full_name %></h1>
-        <h3 style="margin-top: -10px; color: grey;"><%= @senator.state_rank.capitalize %> Senator from <%= @senator.state.name %></h3>
-        <% if @senator.leadership_role %>
-          <h3 style="margin-top: -10px; color: grey;"><%= @senator.leadership_role %></h3>
-        <% end %>
-      </div>
-      <div class="image">
-        <img class="ui medium image" src=<%= @senator.image %>>
-      </div>
-      <% if logged_in? %>
-        <div class="ui green bottom attached button">
-          <i class="call icon"></i>
-          Schedule Call
-        </div>
-      <% else %>
-        <%= link_to "Log In to Schedule Call", login_path, class: "ui bottom attached button"%>
-      <% end %>
-    </div>
+    <%= render "senators/card2" %>
   </div>
   <div class="eleven wide column">
     <div class="row">
