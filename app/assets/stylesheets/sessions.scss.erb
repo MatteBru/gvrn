@@ -3,7 +3,9 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .capitol_bg {
-  background-image: url("capitol_bg.png");
+  // background-image: url("capitol_bg.png");
+  background-image: url('<%= asset_path("capitol_bg.png") %>');
+  // background-image: <%= asset_path("capitol_bg.png") %>;
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
