@@ -1,0 +1,37 @@
+// Place all the styles related to the Static controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.jumbotron {
+  background-image: url("fullscreen_bg.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  z-index: -1;
+}
+
+.content {
+  padding-top: 15%;
+  color: white;
+  h1 {
+    font-size: 4rem;
+  }
+  h4 {
+    margin-top: -1rem;
+    color: #eee;
+  }
+  h3 {
+    margin-top: 4rem;
+  }
+  div.ui.segment {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    label {
+      color: white;
+    }
+  }
+}

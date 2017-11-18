@@ -1,0 +1,21 @@
+<% content_for :jumbotron do %>
+  <div class="flag_bg"></div>
+<% end %>
+<div class="ui three column centered grid">
+  <div class="column">
+    <div class="ui raised segment">
+      <div class="ui huge header">Please Log In</div>
+      <%= form_for(:session, url: sessions_path, :html => {:class => 'ui form'}) do |f| %> 
+        <div class="field">
+          <%= f.email_field :email, class: "ui input", :placeholder => "Email" %>
+        </div> 
+        <div class="field">
+          <%= f.password_field :password, class: "ui input", :placeholder => "Password" %> 
+        </div>
+        <div class="field">
+          <%= f.submit "Log in", class: "ui button" %>
+        </div>
+      <% end %>
+    </divs>
+  </div>
+</div>

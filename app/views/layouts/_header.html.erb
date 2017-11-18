@@ -1,0 +1,32 @@
+<div class="ui fixed inverted menu">
+  <div class="ui container">
+    <a href="/" class="header item">
+      <%= image_tag "logo.png", class: "logo" %>
+      gvrn
+    </a>
+    <%= link_to "Senate", senators_path, class: "item" %>
+    <%= link_to "House", representatives_path, class: "item" %>
+    <div class="right menu">
+      <% if logged_in? %>
+        <a class="item", href=<%= user_path(session[:user_id])%>>
+          <i class="user icon"></i>
+          <%= get_user_name %>
+        </a>
+        <div class="item">
+          <%= link_to "Log Out", session_path(session), method: :delete, class: "ui button" %>
+        </div>
+      <% else %>
+        <%= link_to "Log In", login_path, class: "item" %>
+        <div class="item">
+          <%= link_to "Sign Up", signup_path, class: "ui primary button" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<% if flash[:message] %>
+  <div class="flash" style="background-color: lightgreen; width: 100%; margin-top: 53px; margin-bottom: -53px;">
+    <p style="text-align: center; padding: 10px;"><%= flash[:message] %></p>
+  </div>
+<% end %>

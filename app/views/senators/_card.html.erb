@@ -1,0 +1,60 @@
+<div class="column">
+  <div class="ui fluid card">
+    <a class="image", href=<%= senator_path(sen) %>>
+      <%= image_tag sen.image %>
+    </a>
+    <div class="content">
+      <%= link_to "Sen. #{sen.full_name} — #{sen.party}", senator_path(sen), class: "header" %>
+    </div>
+    <% if logged_in? %>
+      <div class="ui bottom attached buttons">
+        <button class="ui button schedule_sen_<%= sen.state_rank %>" style="width: 24%;"><i class="calendar icon"></i>Schedule</button>
+        <div class="or"></div>
+        <button class="ui positive button call_sen_<%= sen.state_rank %>"><i class="call icon"></i>Call</button>
+      </div>
+    <% else %>
+      <%= link_to "Log In to Schedule Call", login_path, class: "ui bottom attached button"%>
+    <% end %>
+  </div>
+</div>
+
+<div class="ui mini modal senator_call_modal_<%= sen.state_rank %>">
+  <i class="close icon"></i>
+  <div class="content">
+    <p style="color: black;">Call Senator <%= sen.full_name %>?<p>
+  </div>
+  <div class="actions">
+    <%= form_with url: appointments_path, local: true do |f| %>
+    <%= f.hidden_field "appointment[congressperson_type]", value: "senator"%>
+    <%= f.hidden_field "appointment[congressperson_id]", value: sen.id %>
+    <div class="ui black deny button">
+      Cancel
+    </div>
+      <%= f.submit "Let's Do It!", class: "ui positive right button"%>
+    <% end %>
+  </div>
+</div>
+
+<div class="ui tiny modal senator_schedule_modal_<%= sen.state_rank %>">
+  <i class="close icon"></i>
+  <div class="header">
+    Schedule Appointment
+  </div>
+  <div class="content">
+    <%= form_with url: appointments_path, local: true, method: "post", class: "ui form" do |f| %>
+      <div class="fields">
+        <%= f.hidden_field "appointment[delay]", value: true %>
+        <%= f.hidden_field "appointment[congressperson_type]", value: "senator"%>
+        <%= f.hidden_field "appointment[congressperson_id]", value: sen.id %>
+        <%= date_select("appointment", "date", {start_year: 2017, end_year: 2018}, {class: "ui dropdown"}) %>
+        <%= time_select("appointment", "time", {prompt: {hour: 'Hour', minute: 'Minute'}, ampm: true}, {class: "ui dropdown"}) %>
+      </div>
+  </div>
+  <div class="actions">
+    <div class="ui black deny button">
+      Cancel
+    </div>
+      <%= f.submit "Submit", class: "ui positive right button"%>
+    <% end %>
+  </div>
+</div>
