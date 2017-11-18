@@ -26,7 +26,7 @@ def find_wikipedia_page(google_entity_id)
     begin
       url = result_hash["itemListElement"][0]["result"]["image"]["url"]
     rescue
-      byebug
+      #byebug
       url = ""
     end
   end
@@ -40,10 +40,10 @@ def find_wikipedia_page(google_entity_id)
         get_bio(target)
       rescue
         url = "https://en.wikipedia.org/wiki/#{slugified_name}_(American_politician)"
-        byebug
+        #byebug
       end
     rescue
-      byebug
+      #byebug
     end
   end
   url
@@ -54,7 +54,7 @@ def find_target_from_wikipedia_page(url)
   begin
     target = matches.captures[0].gsub("_", "%20")
   rescue
-    byebug
+    #byebug
   end
 end
 
@@ -71,7 +71,7 @@ def get_start_date(target)
     start_date = term_start.parent.children[2].children.text.strip
     Date.parse(start_date)
   rescue
-    byebug
+    #byebug
     nil
   end
 end
@@ -86,7 +86,7 @@ def get_bio(target)
     bio = result_hash["query"]["pages"][random_string]["extract"]
     bio.gsub(bio.match(/ (\([^\)]*\))/)[0], "")
   rescue
-    byebug
+    #byebug
   end
 end
 
@@ -101,7 +101,7 @@ def get_image(target)
     slugged_image_url = image_string.gsub("_", "%20").prepend("File:")
     get_image_from_slug(slugged_image_url)
   rescue
-    byebug
+    #byebug
     nil
   end
 end
@@ -183,7 +183,7 @@ def create_district(representative_hash)
     end
     rep_district
   else
-    byebug
+    #byebug
   end
 end
 
