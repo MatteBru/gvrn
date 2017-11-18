@@ -18,7 +18,7 @@ def create_states
 end
 
 def find_wikipedia_page(google_entity_id)
-  google_entity_id == "/m/03whyr" ? g_id = "/m/04m7rg" : g_id = google_entity_id    
+  google_entity_id == "/m/03whyr" ? g_id = "/m/04m7rg" : g_id = google_entity_id
   result_hash = HTTParty.get("https://kgsearch.googleapis.com/v1/entities:search?ids=#{g_id}&key=AIzaSyAbq12TpjfMtq1d4nn95MbeutoEF6Hso5Y").parsed_response
   begin
     url = result_hash["itemListElement"][0]["result"]["detailedDescription"]["url"]
@@ -92,7 +92,7 @@ end
 
 def get_image(target)
   result_hash = HTTParty.get(
-    "https://en.wikipedia.org/w/api.php?action=query&titles=#{target}&prop=pageimages&format=json&redirects", 
+    "https://en.wikipedia.org/w/api.php?action=query&titles=#{target}&prop=pageimages&format=json&redirects",
     :headers => WIKIMEDIA_HEADERS
   ).parsed_response
   begin
@@ -121,7 +121,7 @@ end
 
 def create_senator(senator_hash)
   if senator_hash["in_office"] == true
-    senator = Representative.find_by(
+    senator = Senator.find_by(
       first_name: senator_hash["first_name"],
       last_name: senator_hash["last_name"],
       date_of_birth: Date.parse(senator_hash["date_of_birth"])
@@ -171,12 +171,12 @@ def create_district(representative_hash)
   rep_state = State.find_by(abbreviation: representative_hash["state"])
   if rep_state
     rep_district = District.find_by(
-      state_id: rep_state.id, 
+      state_id: rep_state.id,
       name: representative_hash["district"]
     )
     if !rep_district
       rep_district = District.create(
-        state_id: rep_state.id, 
+        state_id: rep_state.id,
         name: representative_hash["district"]
       )
       rep_state.districts << rep_district
@@ -206,7 +206,7 @@ def create_representative(representative_hash)
             wikipedia_page = "https://en.wikipedia.org/wiki/#{representative_hash["first_name"]}_#{representative_hash["last_name"]}"
           end
         end
-        target = find_target_from_wikipedia_page(wikipedia_page)   
+        target = find_target_from_wikipedia_page(wikipedia_page)
         representative = Representative.create(
           first_name: representative_hash["first_name"],
           middle_name: representative_hash["middle_name"],
