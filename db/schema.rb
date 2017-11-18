@@ -12,9 +12,12 @@
 
 ActiveRecord::Schema.define(version: 20171114205234) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "appointments", force: :cascade do |t|
     t.string "congressperson_type"
-    t.integer "congressperson_id"
+    t.bigint "congressperson_id"
     t.integer "user_id"
     t.datetime "time"
     t.datetime "created_at", null: false
@@ -113,6 +116,9 @@ ActiveRecord::Schema.define(version: 20171114205234) do
     t.string "abbreviation"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "test", id: :integer, default: nil, force: :cascade do |t|
   end
 
   create_table "users", force: :cascade do |t|

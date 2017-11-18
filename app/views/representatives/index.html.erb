@@ -1,5 +1,8 @@
 <h1 style="text-align: center; padding-bottom: 30px;">Representatives</h1>
 
+<!-- <%= bar_chart Representative.left_joins(:appointments).group(:id).order('COUNT(appointments.id) DESC').limit(5).appointments.count %> -->
+
+
 <% @states.each do |state| %>
 <table class="ui striped table">
   <thead>
