@@ -14,17 +14,32 @@ GVRN is designed as with a fairly traditional rails app structure:
 # Usage
 
 To set up GVRN you will first need to clone it to your machine:
+
+
 ```git clone git@github.com:MatteBru/gvrn.git```
 
+
 Install its gems:
+
+
 ```bundle-install```
 
+
 To create and seed the database, you must have PostgreSQL installed, then run:
+
+
 ```rake db:setup```
+
+
 **Note: Seeding will take quite some time, also some members of congress have changed since the exception handling in the seed file was created, so there may be some weirdness with the data pulled from Wikipedia**
 
+
 Once that is done, you should be able to run the development server by running:
+
+
 ```rails s```
+
+
 It should open on port 3000, so if you visit http://localhost:3000/ you should see the landing page
 
 
