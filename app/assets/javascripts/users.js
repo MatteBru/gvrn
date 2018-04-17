@@ -47,4 +47,4 @@ var main = () => {
   })
 };
 
-$(document).on('turbolinks:load', main);
+$(document).on('page:change', main);
