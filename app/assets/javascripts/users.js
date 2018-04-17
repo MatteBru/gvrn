@@ -48,3 +48,4 @@ var main = () => {
 };
 
 $(document).ready(main);
+$(document).on('turbolinks:load', main);
