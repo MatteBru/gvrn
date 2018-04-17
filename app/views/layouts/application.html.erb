@@ -13,6 +13,7 @@
         .dropdown()
       ;
     </script>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
@@ -24,7 +25,7 @@
     <div class="ui main container" style="padding-top: 7em;">
       <%= yield %>
     </div>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'true' %>
+    
     
   </body>
 </html>
