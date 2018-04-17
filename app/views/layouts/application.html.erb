@@ -7,6 +7,12 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <script   src="https://code.jquery.com/jquery-3.2.1.min.js"   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.js"></script>
+    <script type="text/javascript">
+      $('#select')
+        .dropdown()
+      ;
+    </script>
   </head>
 
   <body>
@@ -18,12 +24,7 @@
     <div class="ui main container" style="padding-top: 7em;">
       <%= yield %>
     </div>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'true' %>
-    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.2.13/dist/semantic.min.js"></script>
-    <script type="text/javascript">
-      $('#select')
-        .dropdown()
-      ;
-    </script>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    
   </body>
 </html>
