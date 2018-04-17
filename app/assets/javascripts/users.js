@@ -46,5 +46,4 @@ var main = () => {
     $('.senator_schedule_modal_senior').modal('show');
   })
 };
-
-$(document).on('page:change', main);
+$( document ).on('turbolinks:load', main)
