@@ -1,0 +1,92 @@
+/* line 5, /Users/matteobruni/Development/job-getting/gvrn/app/assets/stylesheets/sessions.scss.erb */
+.capitol_bg {
+  background-image: url("/assets/capitol_bg-98eb37891a3ac694b8d74b0eb8b76bb45093148b3de825167e12eb7a7e43261b.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  z-index: -1;
+}
+/* line 5, /Users/matteobruni/Development/job-getting/gvrn/app/assets/stylesheets/static.scss */
+.jumbotron {
+  background-image: url('<%= asset_path("fullscreen_bg.png") %>');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  z-index: -1;
+}
+
+/* line 16, /Users/matteobruni/Development/job-getting/gvrn/app/assets/stylesheets/static.scss */
+.content {
+  padding-top: 15%;
+  color: white;
+}
+/* line 19, /Users/matteobruni/Development/job-getting/gvrn/app/assets/stylesheets/static.scss */
+.content h1 {
+  font-size: 4rem;
+}
+/* line 22, /Users/matteobruni/Development/job-getting/gvrn/app/assets/stylesheets/static.scss */
+.content h4 {
+  margin-top: -1rem;
+  color: #eee;
+}
+/* line 26, /Users/matteobruni/Development/job-getting/gvrn/app/assets/stylesheets/static.scss */
+.content h3 {
+  margin-top: 4rem;
+}
+/* line 29, /Users/matteobruni/Development/job-getting/gvrn/app/assets/stylesheets/static.scss */
+.content div.ui.segment {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+/* line 33, /Users/matteobruni/Development/job-getting/gvrn/app/assets/stylesheets/static.scss */
+.content div.ui.segment label {
+  color: white;
+}
+/* line 5, /Users/matteobruni/Development/job-getting/gvrn/app/assets/stylesheets/users.scss.erb */
+.flag_bg {
+  background-image: url("/assets/flag_bg-7459923b9bec26a67182ab6be2f5b01e3e86e9c7be25ccb986f358e263730252.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  z-index: -1;
+}
+
+/* line 17, /Users/matteobruni/Development/job-getting/gvrn/app/assets/stylesheets/users.scss.erb */
+.ui.fluid.card a.image {
+  height: 425px;
+  overflow: hidden;
+}
+
+/* line 23, /Users/matteobruni/Development/job-getting/gvrn/app/assets/stylesheets/users.scss.erb */
+div.ui.vertical.icon.menu {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin-bottom: 10px;
+}
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+
+
+ */
+

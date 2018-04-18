@@ -23,6 +23,7 @@ class AppointmentsController < ApplicationController
     else
       flash[:message] = "Call Initiated"
     end
+    
     Appointment.create(user: user, time: time, congressperson: congressperson)
     redirect_back(fallback_location: root_path)
   end

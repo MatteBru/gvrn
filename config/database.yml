@@ -16,7 +16,7 @@ default: &default
 
 development:
   <<: *default
-  database: db/development_db
+  database: gvrn/development_db
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -27,7 +27,7 @@ development:
 
 test:
   <<: *default
-  database: db/test_db
+  database: gvrn/test_db
 
 # production:
 #   <<: *default
@@ -35,4 +35,4 @@ test:
 
   production:
     <<: *default
-    database: db/production_db
+    database: gvrn/production_db
