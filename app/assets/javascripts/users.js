@@ -52,10 +52,6 @@ var main = () => {
     console.log('here');
   })
 };
-
 $(document).ready(main);
 $(document).on('turbolinks:load', main);
 $(window).bind('page:change', main)
-
-// $(document).on "turbolinks:load", ->
-//   alert "page has loaded!"
