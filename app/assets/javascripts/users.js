@@ -51,6 +51,7 @@ var main = () => {
     $('.senator_schedule_modal_senior').modal('show');
     console.log('here');
   })
+
 };
 $(document).ready(main);
 $(document).on('turbolinks:load', main);
