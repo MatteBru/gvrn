@@ -48,5 +48,7 @@ There are two simultaneous processes that must be run in order to get the app fu
 
 ```rake jobs:work```
 
+**Note: Twilio requires an externally facing page for calling, this is currently set to GVRN's homepage, if you want calling to work on your version you will need to modivy the Twilio base URL in the Twilier model**
+
 
 
