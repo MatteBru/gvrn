@@ -5,7 +5,7 @@ module Twilier
   ACCOUNT_SID = "ACd0c6a3b407a9e2259ef612a46c38d005" # Your Account SID from www.twilio.com/console
   AUTH_TOKEN = "4d081ee4f9e900b2d98db3f1a1fd309d"   # Your Auth Token from www.twilio.com/console
   TWILIO_NUMBER = "+15623624876"
-  NGROK_URL = "https://gvrn.herokuapp.com"
+  NGROK_URL = "https://gvrn-pr-3.herokuapp.com"
 
 
   def confirm_message
