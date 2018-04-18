@@ -19,32 +19,43 @@ var main = () => {
         let offset = ((357 - width) * -1)
         $(this).css("margin-left", offset)
       }
-    } 
+    }
   });
 
   $('.call_rep').click(() => {
     $('.representative_call_modal').modal('show');
+    console.log('here');
   })
 
   $('.schedule_rep').click(() => {
     $('.representative_schedule_modal').modal('show');
+    console.log('here');
   })
 
   $('.call_sen_junior').click(() => {
     $('.senator_call_modal_junior').modal('show');
+    console.log('here');
   })
 
   $('.schedule_sen_junior').click(() => {
     $('.senator_schedule_modal_junior').modal('show');
+    console.log('here');
   })
 
   $('.call_sen_senior').click(() => {
     $('.senator_call_modal_senior').modal('show');
+    console.log('here');
   })
 
   $('.schedule_sen_senior').click(() => {
     $('.senator_schedule_modal_senior').modal('show');
+    console.log('here');
   })
 };
 
 $(document).ready(main);
+$(document).on('turbolinks:load', main);
+$(window).bind('page:change', main)
+
+// $(document).on "turbolinks:load", ->
+//   alert "page has loaded!"
