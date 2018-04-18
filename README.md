@@ -43,4 +43,10 @@ Once that is done, you should be able to run the development server by running:
 It should open on port 3000, so if you visit http://localhost:3000/ you should see the landing page
 
 
+There are two simultaneous processes that must be run in order to get the app functioning correctly, the web process we just set up and a worker process to handle the scheduling, calling and texting. To start this process, you can run:
+
+
+```rake jobs:work```
+
+
 
