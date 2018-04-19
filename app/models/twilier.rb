@@ -2,10 +2,15 @@ module Twilier
   # require 'twilio-ruby'
 
 
-  ACCOUNT_SID = "ACd0c6a3b407a9e2259ef612a46c38d005" # Your Account SID from www.twilio.com/console
-  AUTH_TOKEN = "4d081ee4f9e900b2d98db3f1a1fd309d"   # Your Auth Token from www.twilio.com/console
-  TWILIO_NUMBER = "+15623624876"
-  NGROK_URL = "https://gvrn.herokuapp.com"
+  # ACCOUNT_SID = "ACd0c6a3b407a9e2259ef612a46c38d005" # Your Account SID from www.twilio.com/console
+  # AUTH_TOKEN = "4d081ee4f9e900b2d98db3f1a1fd309d"   # Your Auth Token from www.twilio.com/console
+  # TWILIO_NUMBER = "+15623624876"
+  # BASE_URL = "https://gvrn.herokuapp.com"
+
+  ACCOUNT_SID = ENV['twilio_sid'] # Your Account SID from www.twilio.com/console
+  AUTH_TOKEN = ENV['twilio_auth']   # Your Auth Token from www.twilio.com/console
+  TWILIO_NUMBER = ENV['twilio_number']  #Your Twilio Phone Number
+  BASE_URL = ENV['base_url']  #Your App's Base URL
 
 
   def confirm_message
@@ -31,7 +36,7 @@ module Twilier
   def start_call
     @client = Twilio::REST::Client.new ACCOUNT_SID, AUTH_TOKEN
     call = @client.calls.create(
-        url: "#{NGROK_URL}/connect/#{self.id}",
+        url: "#{BASE_URL}/connect/#{self.id}",
         to: self.user.phone,    # Replace with your phone number
         from: TWILIO_NUMBER)  # Replace with your Twilio number
   end
