@@ -16,7 +16,7 @@ class User < ApplicationRecord
 
 
   CIV_HOST = 'https://www.googleapis.com/civicinfo/v2/representatives'
-  GCODE_TOKEN = "AIzaSyAbq12TpjfMtq1d4nn95MbeutoEF6Hso5Y"
+  GCODE_TOKEN = ENV['google_civics_token']
 
   def addr_string
     "#{self.address}, #{self.city}, #{self.address_state} #{self.zip_code}"
