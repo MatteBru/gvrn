@@ -4,7 +4,7 @@ class TwilioController < ApplicationController
   before_action :set_apt, only: [:connect]
   before_action :authenticate_twilio_request, only: [:connect]
 
-  AUTH_TOKEN = "4d081ee4f9e900b2d98db3f1a1fd309d"
+  AUTH_TOKEN = ENV['twilio_auth']
 
   def set_apt
     @apt = Appointment.find(params[:apt_id])

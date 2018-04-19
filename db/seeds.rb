@@ -6,8 +6,13 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-PROPUBLICA_HEADERS = {"X-API-Key" => "Bi8jLFPUDEt743g2DnWFchat1WJPsYd5ainS1uD1"}
-WIKIMEDIA_HEADERS = {"Api-User-Agent" => "gvrn/0.1 (bewguy101@gmail.com)"}
+# PROPUBLICA_HEADERS = {"X-API-Key" => "Bi8jLFPUDEt743g2DnWFchat1WJPsYd5ainS1uD1"}
+# WIKIMEDIA_HEADERS = {"Api-User-Agent" => "gvrn/0.1 (bewguy101@gmail.com)"}
+
+PROPUBLICA_HEADERS = {"X-API-Key" => ENV['propublica_key']}
+WIKIMEDIA_HEADERS = {"Api-User-Agent" => ENV['wikimedia_user_agent']}
+
+
 CURRENT_CONGRESS = "115"
 STATES = {"AL"=>"Alabama", "AK"=>"Alaska", "AZ"=>"Arizona", "AR"=>"Arkansas", "CA"=>"California", "CO"=>"Colorado", "CT"=>"Connecticut", "DE"=>"Delaware", "FL"=>"Florida", "GA"=>"Georgia", "HI"=>"Hawaii", "ID"=>"Idaho", "IL"=>"Illinois", "IN"=>"Indiana", "IA"=>"Iowa", "KS"=>"Kansas", "KY"=>"Kentucky", "LA"=>"Louisiana", "ME"=>"Maine", "MD"=>"Maryland", "MA"=>"Massachusetts", "MI"=>"Michigan", "MN"=>"Minnesota", "MS"=>"Mississippi", "MO"=>"Missouri", "MT"=>"Montana", "NE"=>"Nebraska", "NV"=>"Nevada", "NH"=>"New Hampshire", "NJ"=>"New Jersey", "NM"=>"New Mexico", "NY"=>"New York", "NC"=>"North Carolina", "ND"=>"North Dakota", "OH"=>"Ohio", "OK"=>"Oklahoma", "OR"=>"Oregon", "PA"=>"Pennsylvania", "RI"=>"Rhode Island", "SC"=>"South Carolina", "SD"=>"South Dakota", "TN"=>"Tennessee", "TX"=>"Texas", "UT"=>"Utah", "VT"=>"Vermont", "VA"=>"Virginia", "WA"=>"Washington", "WV"=>"West Virginia", "WI"=>"Wisconsin","WY"=>"Wyoming"}
 
