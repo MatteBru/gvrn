@@ -1,0 +1,9 @@
+
+
+twilio_sid: "ACd0c6a3b407a9e2259ef612a46c38d005" # Your Account SID from www.twilio.com/console
+twilio_auth: "4d081ee4f9e900b2d98db3f1a1fd309d"   # Your Auth Token from www.twilio.com/console
+twilio_number: "+15623624876"
+base_url: "https://gvrn.herokuapp.com"
+propublica_key: "Bi8jLFPUDEt743g2DnWFchat1WJPsYd5ainS1uD1"
+wikimedia_user_agent: "gvrn/0.1 (bewguy101@gmail.com)"
+google_kg_key: 'AIzaSyAbq12TpjfMtq1d4nn95MbeutoEF6Hso5Y'
