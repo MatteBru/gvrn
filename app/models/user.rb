@@ -12,6 +12,7 @@ class User < ApplicationRecord
   before_validation :dist_search
 
   validates_presence_of :email
+  validates_presence_of :first_name
 
 
 
@@ -28,6 +29,9 @@ class User < ApplicationRecord
       includeOffices: false,
       levels: "country"
     }
+
+    byebug
+
     url = "#{CIV_HOST}?key=#{GCODE_TOKEN}"
 
     response = HTTP.get(url, params: params)
