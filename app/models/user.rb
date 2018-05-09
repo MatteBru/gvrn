@@ -30,7 +30,7 @@ class User < ApplicationRecord
       levels: "country"
     }
 
-    byebug
+    # byebug
 
     url = "#{CIV_HOST}?key=#{GCODE_TOKEN}"
 
