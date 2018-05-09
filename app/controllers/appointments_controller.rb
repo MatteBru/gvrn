@@ -7,7 +7,11 @@ class AppointmentsController < ApplicationController
     h = appointment_params["time(4i)"].to_i
     m = appointment_params["time(5i)"].to_i
     # byebug
-    DateTime.new(y, mo, d, h, m) + 5.hours
+
+    # DateTime.new(y, mo, d, h, m) + 5.hours
+    # hacky workaround for daylight savings time
+    # TODO: fix daylight savings time
+    DateTime.new(y, mo, d, h, m) + 4.hours
   end
 
   def create
@@ -23,7 +27,7 @@ class AppointmentsController < ApplicationController
     else
       flash[:message] = "Call Initiated"
     end
-    
+
     Appointment.create(user: user, time: time, congressperson: congressperson)
     redirect_back(fallback_location: root_path)
   end
