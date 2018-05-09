@@ -12,11 +12,12 @@ class User < ApplicationRecord
   before_validation :dist_search
 
   validates_presence_of :email
+  validates_presence_of :first_name
 
 
 
   CIV_HOST = 'https://www.googleapis.com/civicinfo/v2/representatives'
-  GCODE_TOKEN = "AIzaSyAbq12TpjfMtq1d4nn95MbeutoEF6Hso5Y"
+  GCODE_TOKEN = ENV['google_civics_token']
 
   def addr_string
     "#{self.address}, #{self.city}, #{self.address_state} #{self.zip_code}"
@@ -28,31 +29,42 @@ class User < ApplicationRecord
       includeOffices: false,
       levels: "country"
     }
+
+    # byebug
+
     url = "#{CIV_HOST}?key=#{GCODE_TOKEN}"
 
     response = HTTP.get(url, params: params)
-    gci_api_hash = response.parse
+
+    if response.status == 400
+      self.errors.add(:address, :invalid, message: 'Sorry, that appears to be an invalid address')
+    else
+      gci_api_hash = response.parse
 
 
-    norm_addr_hash = gci_api_hash["normalizedInput"]
+      norm_addr_hash = gci_api_hash["normalizedInput"]
 
-    begin
-      cong_dist_hash = gci_api_hash["divisions"].keys.select{|k|k.match(/state:(\w{2})\/cd:(\d+)/)}[0][/state:(\w{2})\/cd:(\d+)/, 0].split('/').map{|s|s.split(':')}.to_h
-      cd = cong_dist_hash["cd"]
-      # byebug
-      state = State.find_by(abbreviation: cong_dist_hash["state"].upcase)
-    rescue
-      state = State.find_by(abbreviation: norm_addr_hash["state"])
-      cd = "At-Large"
+      begin
+        cong_dist_hash = gci_api_hash["divisions"].keys.select{|k|k.match(/state:(\w{2})\/cd:(\d+)/)}[0][/state:(\w{2})\/cd:(\d+)/, 0].split('/').map{|s|s.split(':')}.to_h
+        cd = cong_dist_hash["cd"]
+        # byebug
+        state = State.find_by(abbreviation: cong_dist_hash["state"].upcase)
+      rescue
+        state = State.find_by(abbreviation: norm_addr_hash["state"])
+        cd = "At-Large"
+      end
+
+      self.district = District.find_by(state: state, name: cd)
+      if !self.district
+        self.errors.add(:address, :invalid, message: 'Sorry, that appears to be an invalid address')
+      else
+        # NORMALIZE AND SET ADDRESS ATTRIBUTES
+        self.address = norm_addr_hash["line1"]
+        self.city = norm_addr_hash["city"]
+        self.address_state = norm_addr_hash["state"]
+        self.zip_code = norm_addr_hash["zip"]
+      end
     end
-
-    self.district = District.find_by(state: state, name: cd)
-
-    # NORMALIZE AND SET ADDRESS ATTRIBUTES
-    self.address = norm_addr_hash["line1"]
-    self.city = norm_addr_hash["city"]
-    self.address_state = norm_addr_hash["state"]
-    self.zip_code = norm_addr_hash["zip"]
   end
 
   def format_phone

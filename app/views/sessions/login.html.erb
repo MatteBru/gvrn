@@ -5,12 +5,12 @@
   <div class="column">
     <div class="ui raised segment">
       <div class="ui huge header">Please Log In</div>
-      <%= form_for(:session, url: sessions_path, :html => {:class => 'ui form'}) do |f| %> 
+      <%= form_for(:session, url: sessions_path, :html => {:class => 'ui form'}) do |f| %>
         <div class="field">
-          <%= f.email_field :email, class: "ui input", :placeholder => "Email" %>
-        </div> 
+          <%= f.email_field :email, class: "ui input", :placeholder => "Email", required: true %>
+        </div>
         <div class="field">
-          <%= f.password_field :password, class: "ui input", :placeholder => "Password" %> 
+          <%= f.password_field :password, class: "ui input", :placeholder => "Password", required: true%>
         </div>
         <div class="field">
           <%= f.submit "Log in", class: "ui button" %>

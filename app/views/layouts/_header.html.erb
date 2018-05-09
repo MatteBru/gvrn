@@ -30,3 +30,9 @@
     <p style="text-align: center; padding: 10px;"><%= flash[:message] %></p>
   </div>
 <% end %>
+
+<% if flash[:error] %>
+  <div class="flash" style="background-color: red; width: 100%; margin-top: 53px; margin-bottom: -53px;">
+    <p style="text-align: center; padding: 10px;"><%= flash[:error] %></p>
+  </div>
+<% end %>
